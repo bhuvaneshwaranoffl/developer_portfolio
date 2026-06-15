@@ -1,0 +1,11 @@
+/* =========================================
+   main.css
+   Entry point for all CSS styles.
+   Imports modular stylesheets.
+   ========================================= */
+
+@import url('variables.css');
+@import url('base.css');
+@import url('components.css');
+@import url('sections.css');
+@import url('animations.css');

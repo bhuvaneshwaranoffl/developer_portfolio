@@ -1,0 +1,102 @@
+Bhuvaneshwaran N — Flutter Developer | Bangalore
+<BN/>
+
+About
+Skills
+Experience
+Projects
+Contact
+
+I build Flutter apps that feel like magic.
+2.7 years shipping production fintech apps — from Smallcase MF SDK to offline-first architecture. Clean code. Real impact.
+
+View My Work
+Download Resume
+
+The developer behind the code
+Started coding in 2020 during a pandemic with nothing but curiosity and a laptop. Found Flutter in 2023 — and never looked back.
+Today I build fintech products at Beyondco Technologies, integrating real-money flows like Smallcase MF SDK and Finvu Account Aggregator into apps that people actually trust with their savings.
+I don't just write code. I own features — from requirement to deployment.
+
+
+2.7 Years Experience
+10+ Features Shipped
+3 SDKs Integrated
+8.19 CGPA
+
+What I build with
+Core
+[Flutter] [Dart] [Clean Architecture] [MVVM] [BLoC/Cubit] [Riverpod]
+
+Backend & DB
+[Firebase] [SQLite] [REST APIs] [MongoDB] [Node.js]
+
+Fintech SDKs
+[Smallcase MF SDK] [Finvu AA SDK] [Razorpay]
+
+Testing
+[Widget Tests] [Unit Tests] [Integration Tests] [Cubit Tests]
+
+Tools
+[Git] [Figma] [Cursor AI] [Claude AI] [Postman] [Android Studio]
+
+Where I've shipped
+CURRENT
+Flutter Developer
+Beyondco Technologies (SafeBox)
+Mar 2024 – Present
+Fintech · Product-Based · Coimbatore
+
+Integrated Smallcase MF SDK, Finvu Account Aggregator SDK, and Loan Fetch flows — real-money features used by real users
+Built complex animations with CustomPainter, AnimationController/Tween, and Lottie across key fintech flows
+Maintained offline-first architecture (SQLite + Firebase sync) for zero data loss
+Full test coverage: widget, unit, integration, cubit, and model tests
+Leveraged Cursor AI for 10x development speed without sacrificing quality
+
+Flutter Developer
+T-NXT India Pvt. Ltd.
+Dec 2023 – Feb 2024
+Service-Based · Coimbatore
+
+Sole Flutter developer — owned the entire product lifecycle solo
+Built cross-platform Windows + Mobile billing app for gaming cafés
+GST billing engine, PDF/Excel reports, real-time session timers
+Multi-role access (Admin/Manager/Staff) with JWT authentication
+
+Things I've built
+Production App
+SafeBox — Fintech Platform
+Personal finance + investment management app. Integrates mutual fund purchases, account aggregation, and loan flows with a seamless UX.
+Impact: Real users, real money, real responsibility.
+
+Windows + Mobile
+GameCafe Manager
+Cross-platform billing solution for gaming cafés — GST engine, real-time session tracking, multi-role staff management.
+
+In Progress · ETA Aug 2026
+Fintrack — Personal Finance Tracker
+Offline-first finance tracker with beautiful data viz and budget intelligence. Building this to showcase Clean Architecture done right.
+
+"Ship features, not excuses."
+
+Let's build something
+Let's talk about your next fintech product.
+
+Email
+bhuvaneshwaranoffl@gmail.com
+
+Phone
++91 8220226332
+
+LinkedIn
+bhuvaneshwaran-n
+
+GitHub
+bhuvaneshwaranoffl
+
+Name
+Email
+Message
+Send Message
+
+Built with HTML, CSS & obsession — Bhuvaneshwaran N · 2026

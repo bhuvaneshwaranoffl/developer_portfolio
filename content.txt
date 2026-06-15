@@ -31,7 +31,7 @@ Core
 Backend & DB
 [Firebase] [SQLite] [REST APIs] [MongoDB] [Node.js]
 
-Fintech SDKs
+Family Data Organizer SDKs
 [Smallcase MF SDK] [Finvu AA SDK] [Razorpay]
 
 Testing
@@ -45,7 +45,7 @@ CURRENT
 Flutter Developer
 Beyondco Technologies (SafeBox)
 Mar 2024 – Present
-Fintech · Product-Based · Coimbatore
+Family Data Organizer · Product-Based · Coimbatore
 
 Integrated Smallcase MF SDK, Finvu Account Aggregator SDK, and Loan Fetch flows — real-money features used by real users
 Built complex animations with CustomPainter, AnimationController/Tween, and Lottie across key family data organizer flows
@@ -65,7 +65,7 @@ Multi-role access (Admin/Manager/Staff) with JWT authentication
 
 Things I've built
 Production App
-SafeBox — Fintech Platform
+SafeBox — Family Data Organizer
 Personal finance + investment management app. Integrates mutual fund purchases, account aggregation, and loan flows with a seamless UX.
 Impact: Real users, real money, real responsibility.
 

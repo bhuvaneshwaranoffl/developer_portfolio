@@ -1,44 +1,44 @@
 /**
  * cursor.js
- * Logic for the custom violet dot and lerping ring cursor.
- * Only applies on desktop devices without reduced motion enabled.
+ * Premium custom cursor with dot + lerping ring.
+ * Mix-blend-mode screen for elegant glow effect.
  */
 export function initCursor() {
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorRing = document.querySelector('.cursor-ring');
     if (!cursorDot || !cursorRing) return;
 
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
     const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (isDesktop && !prefersReducedMotion) {
-        // Track mouse movement
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorDot.style.transform = `translate(calc(${mouseX}px - 50%), calc(${mouseY}px - 50%))`;
-        });
+    if (!isDesktop || prefersReducedMotion) return;
 
-        // Lerp function for smooth ring trailing
-        const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
-        
-        const renderRing = () => {
-            ringX = lerp(ringX, mouseX, 0.15);
-            ringY = lerp(ringY, mouseY, 0.15);
-            
-            cursorRing.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-            requestAnimationFrame(renderRing);
-        };
-        requestAnimationFrame(renderRing);
+    let mx = 0, my = 0, rx = 0, ry = 0;
 
-        // Add hover effects for interactive elements
-        const interactables = document.querySelectorAll('a, button, input, textarea, .project-card, .contact-card');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
+    // Track mouse for dot (instant follow)
+    document.addEventListener('mousemove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cursorDot.style.left = mx + 'px';
+        cursorDot.style.top = my + 'px';
+    });
+
+    // Lerp ring for smooth trailing
+    function lerpRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        cursorRing.style.left = rx + 'px';
+        cursorRing.style.top = ry + 'px';
+        requestAnimationFrame(lerpRing);
     }
+    lerpRing();
+
+    // Add hover effects for interactive elements
+    const interactables = document.querySelectorAll(
+        'a, button, .proj-card, .stat-card, .skill-pill, .contact-item, input, textarea'
+    );
+    interactables.forEach(el => {
+        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
 }

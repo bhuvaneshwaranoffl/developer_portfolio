@@ -1,12 +1,13 @@
 /**
  * animations.js
  * 
- * Scroll-driven 3D animation engine.
- * - Intersection Observer for cinematic element reveals
- * - Scroll-progress-linked floating 3D objects
- * - Parallax depth layers
+ * Scroll-driven animation engine.
+ * - Intersection Observer for element reveals
+ * - Counter animation for stats
+ * - Staggered skill pill reveals
+ * - Scroll parallax for hero and orb
  * - 3D tilt hover for project cards
- * - Counter animation for stat numbers
+ * - Floating 3D decorative objects
  */
 export function initAnimations() {
     const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
@@ -16,34 +17,18 @@ export function initAnimations() {
 
     // =============================================
     // 1. CREATE FLOATING 3D OBJECTS
-    //    These exist between sections and respond
-    //    to scroll position for depth/parallax.
     // =============================================
     if (isDesktop) {
         createFloatingObjects();
     }
 
     // =============================================
-    // 2. INTERSECTION OBSERVER — Cinematic Reveals
-    //    Each element gets a 'visible' class when
-    //    it enters the viewport, triggering its
-    //    CSS 3D transition.
+    // 2. INTERSECTION OBSERVER — Reveals
     // =============================================
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-
-                // Stats counter animation
-                if (entry.target.classList.contains('stats-card')) {
-                    animateCounters(entry.target);
-                }
-
-                // Skill pills staggered scatter
-                if (entry.target.classList.contains('skills-cloud')) {
-                    animateSkillPills(entry.target);
-                }
-
                 revealObserver.unobserve(entry.target);
             }
         });
@@ -53,90 +38,73 @@ export function initAnimations() {
     });
 
     // Observe all revealable elements
-    const revealTargets = [
-        '.section-header',
-        '.timeline-item',
-        '.project-card',
-        '.stats-card',
-        '.skills-cloud',
-        '.about-story',
-        '.quote-container',
-        '.contact-info',
-        '.contact-form'
-    ];
-    document.querySelectorAll(revealTargets.join(', ')).forEach(el => {
+    document.querySelectorAll('.reveal, .timeline-item, .proj-card').forEach(el => {
         revealObserver.observe(el);
     });
 
     // =============================================
-    // 3. SCROLL-LINKED PARALLAX
-    //    Different elements move at different
-    //    speeds for depth perception.
+    // 3. SKILL PILLS — Staggered animation
     // =============================================
-    const heroOrb = document.querySelector('.flutter-orb');
-    const quoteContainer = document.getElementById('quote');
-    const divider = document.getElementById('divider');
+    const pillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const pills = entry.target.querySelectorAll('.skill-pill');
+                pills.forEach((p, i) => {
+                    p.style.animationDelay = i * 40 + 'ms';
+                    p.classList.add('visible');
+                });
+                pillObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
 
-    let ticking = false;
+    document.querySelectorAll('.skills-inner').forEach(el => pillObserver.observe(el));
+
+    // =============================================
+    // 4. STAT COUNTERS — Count up animation
+    // =============================================
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const num = entry.target.querySelector('[data-count]');
+                if (num) animateCount(num);
+                statObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.stat-card').forEach(el => statObserver.observe(el));
+
+    // =============================================
+    // 5. SCROLL PARALLAX
+    // =============================================
     window.addEventListener('scroll', () => {
-        if (!ticking) {
-            requestAnimationFrame(() => {
-                const scrolled = window.scrollY;
+        const sy = window.scrollY;
+        const orbWrap = document.querySelector('.hero-orb-wrap');
+        if (orbWrap) orbWrap.style.transform = `translateY(${sy * 0.18}px)`;
+        const heroContent = document.querySelector('.hero-content');
+        if (heroContent) heroContent.style.transform = `translateY(${sy * 0.08}px)`;
 
-                // Hero orb parallax — moves slower than scroll
-                if (heroOrb) {
-                    heroOrb.style.transform = `translateY(${scrolled * -0.4}px) rotateX(${scrolled * 0.02}deg)`;
-                }
-
-                // Quote parallax — counter-scrolls for sticky feel
-                if (divider && quoteContainer) {
-                    const rect = divider.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
-                        const offset = (progress - 0.5) * -80;
-                        const scale = 0.85 + (progress * 0.15);
-                        quoteContainer.style.transform = `translateY(${offset}px) scale(${Math.min(scale, 1)})`;
-                    }
-                }
-
-                // Move floating objects based on scroll
-                if (isDesktop) {
-                    updateFloatingObjects(scrolled);
-                }
-
-                ticking = false;
-            });
-            ticking = true;
+        if (isDesktop) {
+            updateFloatingObjects(sy);
         }
     });
 
     // =============================================
-    // 4. 3D TILT HOVER — Project Cards
-    //    Cards tilt toward the mouse with
-    //    perspective depth.
+    // 6. 3D TILT HOVER — Project Cards
     // =============================================
     if (isDesktop) {
-        const tiltCards = document.querySelectorAll('.tilt-card');
-
-        tiltCards.forEach(card => {
+        document.querySelectorAll('.proj-card').forEach(card => {
             card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const rotateX = ((y - centerY) / centerY) * -8;
-                const rotateY = ((x - centerX) / centerX) * 8;
-
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.03, 1.03, 1.03)`;
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width - 0.5;
+                const y = (e.clientY - r.top) / r.height - 0.5;
+                card.style.transform = `translateY(-6px) rotateX(${-y * 8}deg) rotateY(${x * 8}deg)`;
+                card.style.transition = 'transform 0.1s';
             });
-
             card.addEventListener('mouseleave', () => {
-                card.style.transition = 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-                setTimeout(() => { card.style.transition = ''; }, 600);
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+                card.style.transition = 'transform 0.5s';
             });
         });
     }
@@ -144,53 +112,28 @@ export function initAnimations() {
 
 
 // =============================================
-// HELPER: Animate stat counters
+// HELPER: Animate stat counter
 // =============================================
-function animateCounters(container) {
-    const counters = container.querySelectorAll('.counter');
-    counters.forEach(counter => {
-        const target = parseFloat(counter.getAttribute('data-target'));
-        const isDecimal = counter.hasAttribute('data-decimal');
-        const duration = 2000;
-        const frames = 60;
-        const increment = target / (duration / (1000 / frames));
-        let current = 0;
+function animateCount(el) {
+    const target = parseFloat(el.getAttribute('data-count'));
+    const dec = target % 1 !== 0 ? 2 : 0;
+    const dur = 1200, step = 16;
+    let current = 0, elapsed = 0;
 
-        const updateCounter = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                counter.innerText = target;
-                clearInterval(updateCounter);
-            } else {
-                counter.innerText = isDecimal ? current.toFixed(1) : Math.floor(current);
-            }
-        }, 1000 / frames);
-
-        counter.classList.remove('counter');
-    });
-}
-
-
-// =============================================
-// HELPER: Animate skill pills with scatter
-// =============================================
-function animateSkillPills(cloud) {
-    const pills = cloud.querySelectorAll('.skill-pill');
-    pills.forEach((pill, idx) => {
-        const rx = (Math.random() * 60 - 30) + 'px';
-        const ry = (Math.random() * 60 - 30) + 'px';
-        pill.style.setProperty('--rx', rx);
-        pill.style.setProperty('--ry', ry);
-        pill.style.animationDelay = `${idx * 0.06}s`;
-        pill.classList.add('visible');
-    });
+    const timer = setInterval(() => {
+        elapsed += step;
+        current = target * (elapsed / dur);
+        if (elapsed >= dur) {
+            current = target;
+            clearInterval(timer);
+        }
+        el.textContent = current.toFixed(dec) + (dec === 0 && target >= 10 ? '+' : '');
+    }, step);
 }
 
 
 // =============================================
 // FLOATING 3D OBJECTS SYSTEM
-// Creates decorative geometric shapes that
-// float between sections and respond to scroll.
 // =============================================
 const floatingObjects = [];
 
@@ -217,22 +160,18 @@ function createFloatingObjects() {
 
         floatingObjects.push({ el, speed: s.speed, baseY: parseFloat(s.y) });
 
-        // Fade in after a moment
         setTimeout(() => { el.style.opacity = '0.6'; }, 500);
     });
 }
 
 function updateFloatingObjects(scrollY) {
     const vh = window.innerHeight;
-    const totalHeight = document.documentElement.scrollHeight;
-    const scrollProgress = scrollY / (totalHeight - vh);
 
     floatingObjects.forEach(obj => {
         const offset = scrollY * obj.speed;
         const rotation = scrollY * obj.speed * 0.5;
         obj.el.style.transform = `translateY(${offset}px) rotate(${rotation}deg)`;
 
-        // Fade based on proximity to viewport center
         const rect = obj.el.getBoundingClientRect();
         const distFromCenter = Math.abs(rect.top + rect.height / 2 - vh / 2);
         const opacity = Math.max(0.1, Math.min(0.7, 1 - distFromCenter / vh));

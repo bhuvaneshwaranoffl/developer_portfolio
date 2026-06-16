@@ -5,13 +5,15 @@
  */
 import { initCursor } from './cursor.js';
 import { initNavigation } from './navigation.js';
-import { initHeroAnimation } from './hero.js';
 import { initAnimations } from './animations.js';
+import { initBackground } from './background.js';
+import { initOrb } from './orb.js';
 
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initNavigation();
-    initHeroAnimation();
+    initBackground();
+    initOrb();
     initAnimations();
 });

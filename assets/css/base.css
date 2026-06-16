@@ -12,8 +12,7 @@
 
 html {
     scroll-behavior: smooth;
-    /* Enable scroll-snap on the root for full-page feel */
-    scroll-snap-type: y proximity;
+    overflow-x: hidden;
 }
 
 body {
@@ -23,6 +22,17 @@ body {
     line-height: 1.6;
     overflow-x: hidden;
     cursor: none;
+}
+
+/* Noise Overlay */
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
 }
 
 /* Heading Defaults */
@@ -41,64 +51,87 @@ a {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 5%;
+    padding: 0 4rem;
 }
 
-/* =========================================
-   Full-Page Section System
-   Each section snaps into view and fills
-   the viewport for a cinematic scroll feel.
-   ========================================= */
+/* Sections base */
 section {
-    padding: 10rem 0;
     position: relative;
-    scroll-snap-align: start;
-    /* Ensure sections are isolated stacking contexts */
-    isolation: isolate;
+    z-index: 2;
 }
 
-/* Reusable Section Header styling with 3D reveal */
-.section-header {
-    margin-bottom: 4rem;
-    opacity: 0;
-    transform: perspective(1200px) rotateX(20deg) translateY(80px) scale(0.9);
-    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    transform-style: preserve-3d;
-    will-change: transform, opacity;
-}
-.section-header.visible {
-    opacity: 1;
-    transform: perspective(1200px) rotateX(0deg) translateY(0) scale(1);
-}
-
-.section-header h2 {
-    font-size: 3rem;
-    position: relative;
-    display: inline-block;
-    letter-spacing: -1px;
-}
-
-/* Underline for section headers — animated width */
-.section-header h2::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
+/* Background Canvas */
+#bg-canvas {
+    position: fixed;
+    top: 0;
     left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary), var(--glow));
-    border-radius: 2px;
-    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-}
-.section-header.visible h2::after {
-    width: 60%;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
 }
 
-/* =========================================
-   Floating 3D Objects Between Sections
-   These are purely decorative CSS shapes
-   that respond to scroll position via JS.
-   ========================================= */
+/* Reusable Section Eyebrow */
+.section-eyebrow {
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    color: var(--glow);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-eyebrow::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--glow);
+}
+
+/* Section Title */
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+}
+
+.accent-text {
+    background: linear-gradient(135deg, var(--glow), #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Reveal animation class */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s, transform 0.7s;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Floating 3D Objects */
 .scene-object {
     position: fixed;
     pointer-events: none;
@@ -108,7 +141,6 @@ section {
     transition: opacity 0.6s ease;
 }
 
-/* Individual floating shapes */
 .shape-diamond {
     width: 60px;
     height: 60px;

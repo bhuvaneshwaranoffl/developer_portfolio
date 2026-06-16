@@ -8,6 +8,7 @@ import { initNavigation } from './navigation.js';
 import { initAnimations } from './animations.js';
 import { initBackground } from './background.js';
 import { initOrb } from './orb.js';
+import { initModal } from './modal.js';
 
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,4 +17,5 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackground();
     initOrb();
     initAnimations();
+    initModal();
 });

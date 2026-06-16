@@ -24,21 +24,11 @@ body {
     cursor: none;
 }
 
-/* Noise Overlay */
-body::after {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1;
-    opacity: 0.4;
-}
-
 /* Heading Defaults */
 h1, h2, h3, h4 {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 800;
+    color: var(--text-pri);
 }
 
 /* Link Defaults */
@@ -47,7 +37,7 @@ a {
     text-decoration: none;
 }
 
-/* Standard Container for restricting max width */
+/* Standard Container */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -71,11 +61,11 @@ section {
     pointer-events: none;
 }
 
-/* Reusable Section Eyebrow */
+/* Section Eyebrow */
 .section-eyebrow {
     font-family: var(--font-code);
     font-size: 0.75rem;
-    color: var(--glow);
+    color: var(--text-muted);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -88,20 +78,40 @@ section {
     content: '';
     width: 24px;
     height: 1px;
-    background: var(--glow);
+    background: var(--text-muted);
+}
+
+/* Dark section eyebrow override */
+.dark-section .section-eyebrow {
+    color: rgba(255, 255, 255, 0.4);
+}
+.dark-section .section-eyebrow::before {
+    background: rgba(255, 255, 255, 0.3);
 }
 
 /* Section Title */
 .section-title {
     font-family: var(--font-display);
     font-size: clamp(2rem, 3.5vw, 3.2rem);
-    font-weight: 700;
+    font-weight: 800;
     line-height: 1.1;
     margin-bottom: 3rem;
+    color: var(--text-pri);
 }
 
 .accent-text {
-    background: linear-gradient(135deg, var(--glow), #c084fc);
+    background: linear-gradient(135deg, #000000, #444444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Dark section overrides */
+.dark-section .section-title {
+    color: var(--text-white);
+}
+.dark-section .accent-text {
+    background: linear-gradient(135deg, #FFFFFF, #BBBBBB);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -124,10 +134,10 @@ section {
     width: 4px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--bg);
+    background: #F0F0F0;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--primary);
+    background: var(--dark);
     border-radius: 2px;
 }
 
@@ -144,17 +154,15 @@ section {
 .shape-diamond {
     width: 60px;
     height: 60px;
-    border: 2px solid rgba(124, 58, 237, 0.3);
+    border: 1.5px solid rgba(0, 0, 0, 0.1);
     transform: rotate(45deg);
-    box-shadow: 0 0 30px rgba(124, 58, 237, 0.1), inset 0 0 30px rgba(124, 58, 237, 0.05);
 }
 
 .shape-ring {
     width: 80px;
     height: 80px;
-    border: 2px solid rgba(167, 139, 250, 0.2);
+    border: 1.5px solid rgba(0, 0, 0, 0.08);
     border-radius: 50%;
-    box-shadow: 0 0 40px rgba(167, 139, 250, 0.08);
 }
 
 .shape-cross {
@@ -166,17 +174,17 @@ section {
 .shape-cross::after {
     content: '';
     position: absolute;
-    background: rgba(124, 58, 237, 0.25);
+    background: rgba(0, 0, 0, 0.1);
 }
 .shape-cross::before {
-    width: 2px;
+    width: 1.5px;
     height: 100%;
     left: 50%;
     transform: translateX(-50%);
 }
 .shape-cross::after {
     width: 100%;
-    height: 2px;
+    height: 1.5px;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -186,15 +194,14 @@ section {
     height: 0;
     border-left: 25px solid transparent;
     border-right: 25px solid transparent;
-    border-bottom: 43px solid rgba(124, 58, 237, 0.15);
-    filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.1));
+    border-bottom: 43px solid rgba(0, 0, 0, 0.05);
 }
 
 .shape-hex {
     width: 50px;
     height: 29px;
-    background: rgba(124, 58, 237, 0.1);
-    border: 1px solid rgba(124, 58, 237, 0.2);
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     position: relative;
 }
 .shape-hex::before,
@@ -207,9 +214,9 @@ section {
 }
 .shape-hex::before {
     bottom: 100%;
-    border-bottom: 14px solid rgba(124, 58, 237, 0.1);
+    border-bottom: 14px solid rgba(0, 0, 0, 0.03);
 }
 .shape-hex::after {
     top: 100%;
-    border-top: 14px solid rgba(124, 58, 237, 0.1);
+    border-top: 14px solid rgba(0, 0, 0, 0.03);
 }

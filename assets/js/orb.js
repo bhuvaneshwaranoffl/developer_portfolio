@@ -1,7 +1,7 @@
 /**
  * orb.js
- * 3D wireframe sphere rendered on canvas
- * with mouse-interactive rotation and
+ * 3D wireframe sphere — B&W theme.
+ * Black wireframe on white bg, mouse-interactive rotation,
  * floating tech labels on the surface.
  */
 export function initOrb() {
@@ -57,15 +57,15 @@ export function initOrb() {
         orbAngleY += 0.005 + mouseInfluenceX * 0.02;
         orbAngleX += mouseInfluenceY * 0.01;
 
-        // Glow
+        // Subtle shadow glow (no color)
         const grd = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.1);
-        grd.addColorStop(0, 'rgba(124,58,237,0.18)');
-        grd.addColorStop(0.5, 'rgba(124,58,237,0.06)');
-        grd.addColorStop(1, 'rgba(124,58,237,0)');
+        grd.addColorStop(0, 'rgba(0, 0, 0, 0.06)');
+        grd.addColorStop(0.5, 'rgba(0, 0, 0, 0.02)');
+        grd.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grd;
         ctx.fillRect(cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
 
-        // Draw horizontal rings
+        // Horizontal rings
         for (let ri = 0; ri <= rings; ri++) {
             const phi = Math.PI * ri / rings;
             const pts = [];
@@ -84,8 +84,8 @@ export function initOrb() {
             for (let si = 0; si < segments; si++) {
                 const a = pts[si], b = pts[si + 1];
                 const depth = (a.z + b.z) / (2 * R);
-                const alpha = Math.max(0.04, Math.min(0.55, (depth + 1) / 2));
-                ctx.strokeStyle = `rgba(167,139,250,${alpha})`;
+                const alpha = Math.max(0.03, Math.min(0.25, (depth + 1) / 2));
+                ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
                 ctx.lineWidth = depth > 0 ? 0.8 : 0.3;
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
@@ -94,7 +94,7 @@ export function initOrb() {
             }
         }
 
-        // Draw vertical lines
+        // Vertical lines
         for (let si = 0; si <= segments; si++) {
             const theta = 2 * Math.PI * si / segments;
             const pts = [];
@@ -113,8 +113,8 @@ export function initOrb() {
             for (let ri = 0; ri < rings; ri++) {
                 const a = pts[ri], b = pts[ri + 1];
                 const depth = (a.z + b.z) / (2 * R);
-                const alpha = Math.max(0.04, Math.min(0.45, (depth + 1) / 2));
-                ctx.strokeStyle = `rgba(124,58,237,${alpha})`;
+                const alpha = Math.max(0.03, Math.min(0.2, (depth + 1) / 2));
+                ctx.strokeStyle = `rgba(0, 0, 0, ${alpha * 0.7})`;
                 ctx.lineWidth = 0.4;
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
@@ -123,7 +123,7 @@ export function initOrb() {
             }
         }
 
-        // Floating tech labels on sphere surface
+        // Floating tech labels
         const dotPositions = [
             { phi: Math.PI / 4, theta: Math.PI / 3, label: 'Flutter' },
             { phi: Math.PI / 2, theta: Math.PI, label: 'BLoC' },
@@ -143,14 +143,14 @@ export function initOrb() {
 
             if (p.z > -R * 0.2) {
                 const proj = project3D(p.x, p.y, p.z, cx, cy, fov);
-                const alpha = Math.max(0.2, (p.z + R) / (2 * R));
+                const alpha = Math.max(0.15, (p.z + R) / (2 * R));
 
                 ctx.beginPath();
                 ctx.arc(proj.x, proj.y, 3.5, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(167,139,250,${alpha})`;
+                ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.6})`;
                 ctx.fill();
 
-                ctx.fillStyle = `rgba(240,238,248,${alpha * 0.85})`;
+                ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.5})`;
                 ctx.font = `500 ${Math.floor(10 * proj.scale)}px 'JetBrains Mono', monospace`;
                 ctx.fillText(dp.label, proj.x + 8, proj.y + 4);
             }

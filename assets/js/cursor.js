@@ -1,7 +1,7 @@
 /**
  * cursor.js
- * Premium custom cursor with dot + lerping ring.
- * Mix-blend-mode screen for elegant glow effect.
+ * Adaptive cursor — black on white sections, white on dark sections.
+ * Detects which section the cursor is over and flips color.
  */
 export function initCursor() {
     const cursorDot = document.querySelector('.cursor-dot');
@@ -14,13 +14,25 @@ export function initCursor() {
     if (!isDesktop || prefersReducedMotion) return;
 
     let mx = 0, my = 0, rx = 0, ry = 0;
+    let isOnDark = false;
 
-    // Track mouse for dot (instant follow)
+    // Track mouse for dot (instant follow) + detect dark sections
     document.addEventListener('mousemove', (e) => {
         mx = e.clientX;
         my = e.clientY;
         cursorDot.style.left = mx + 'px';
         cursorDot.style.top = my + 'px';
+
+        // Detect if cursor is over a dark section
+        const el = document.elementFromPoint(mx, my);
+        if (el) {
+            const darkParent = el.closest('.dark-section, .marquee-wrap, footer');
+            const nowOnDark = !!darkParent;
+            if (nowOnDark !== isOnDark) {
+                isOnDark = nowOnDark;
+                document.body.classList.toggle('cursor-on-dark', isOnDark);
+            }
+        }
     });
 
     // Lerp ring for smooth trailing

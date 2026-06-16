@@ -5,23 +5,29 @@
    ========================================= */
 :root {
     /* Backgrounds */
-    --bg: #05050A;
-    --surface: #0D0D15;
-    --card: #12121C;
-    --card2: #161622;
+    --bg: #FFFFFF;
+    --surface: #F8F8F8;
+    --card: #F2F2F2;
+    --dark: #0A0A0A;
     
     /* Accents */
-    --primary: #7C3AED;
-    --glow: #A78BFA;
-    --violet-dim: rgba(124,58,237,0.12);
-    --violet-glow: rgba(124,58,237,0.35);
+    --accent: #000000;
+    --accent-hover: #333333;
     
     /* Text */
-    --text-pri: #F0EEF8;
-    --text-sec: #6B6B85;
+    --text-pri: #0A0A0A;
+    --text-sec: #555555;
+    --text-body: #333333;
+    --text-muted: #999999;
+    --text-white: #FFFFFF;
     
     /* Borders */
-    --border: rgba(124, 58, 237, 0.18);
+    --border: rgba(0, 0, 0, 0.08);
+    --border-strong: #DDDDDD;
+    
+    /* Green — the ONLY color accent */
+    --green: #22c55e;
+    --green-glow: rgba(34, 197, 94, 0.3);
     
     /* Typography */
     --font-display: 'Space Grotesk', sans-serif;

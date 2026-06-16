@@ -1,7 +1,7 @@
 /**
  * background.js
  * Particle canvas background with grid lines
- * and connected particle system.
+ * and connected particle system — B&W theme.
  */
 export function initBackground() {
     const bgCanvas = document.getElementById('bg-canvas');
@@ -28,10 +28,7 @@ export function initBackground() {
             this.size = Math.random() * 1.5 + 0.3;
             this.speedX = (Math.random() - 0.5) * 0.3;
             this.speedY = (Math.random() - 0.5) * 0.3;
-            this.opacity = Math.random() * 0.5 + 0.1;
-            this.color = Math.random() > 0.7
-                ? 'rgba(124,58,237,'
-                : 'rgba(167,139,250,';
+            this.opacity = Math.random() * 0.15 + 0.05;
         }
         update() {
             this.x += this.speedX;
@@ -43,17 +40,17 @@ export function initBackground() {
         draw() {
             ctx.beginPath();
             ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.color + this.opacity + ')';
+            ctx.fillStyle = `rgba(0, 0, 0, ${this.opacity})`;
             ctx.fill();
         }
     }
 
-    for (let i = 0; i < 120; i++) {
+    for (let i = 0; i < 100; i++) {
         particles.push(new Particle());
     }
 
     function drawGrid() {
-        ctx.strokeStyle = 'rgba(124,58,237,0.04)';
+        ctx.strokeStyle = 'rgba(0, 0, 0, 0.04)';
         ctx.lineWidth = 1;
         const gs = 80;
         for (let x = 0; x < W; x += gs) {
@@ -74,14 +71,14 @@ export function initBackground() {
         ctx.clearRect(0, 0, W, H);
         drawGrid();
 
-        // Draw connections between nearby particles
+        // Draw connections
         for (let i = 0; i < particles.length; i++) {
             for (let j = i + 1; j < particles.length; j++) {
                 const dx = particles[i].x - particles[j].x;
                 const dy = particles[i].y - particles[j].y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
                 if (dist < 120) {
-                    ctx.strokeStyle = `rgba(124,58,237,${0.12 * (1 - dist / 120)})`;
+                    ctx.strokeStyle = `rgba(0, 0, 0, ${0.06 * (1 - dist / 120)})`;
                     ctx.lineWidth = 0.5;
                     ctx.beginPath();
                     ctx.moveTo(particles[i].x, particles[i].y);

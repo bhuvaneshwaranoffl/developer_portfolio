@@ -15,7 +15,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="assets/css/main.css">
@@ -63,7 +63,7 @@
     </nav>
 
     <main>
-        <!-- Hero Section -->
+        <!-- Hero Section — White bg -->
         <section id="hero">
             <div class="hero-inner">
                 <div class="hero-content">
@@ -89,36 +89,39 @@
             </div>
         </section>
 
-        <!-- About Section -->
-        <section id="about">
-            <div class="section-eyebrow reveal">The developer</div>
-            <h2 class="section-title reveal">Behind the <span class="accent-text">code</span></h2>
-            <div class="about-grid">
-                <div class="about-story">
-                    <p class="reveal">Started in 2020 during a pandemic with nothing but curiosity, a laptop, and time. Found Flutter in 2023 and <strong>never looked back</strong>.</p>
-                    <p class="reveal">Today I build fintech products at Beyondco Technologies, integrating real money flows like <strong>Smallcase MF SDK</strong> and <strong>Finvu Account Aggregator</strong> into apps that people trust with their savings.</p>
-                    <p class="reveal">I don't just write code. I <strong>own features</strong> from requirement to deployment. Clean Architecture isn't a buzzword to me. It's how I think.</p>
-                    <div class="stats-grid">
-                        <div class="stat-card reveal"><span class="stat-num" data-count="2.7">0</span><span class="stat-label">Years Experience</span></div>
-                        <div class="stat-card reveal"><span class="stat-num" data-count="10">0</span><span class="stat-label">Features Shipped</span></div>
-                        <div class="stat-card reveal"><span class="stat-num" data-count="3">0</span><span class="stat-label">SDKs Integrated</span></div>
-                        <div class="stat-card reveal"><span class="stat-num" data-count="8.19">0</span><span class="stat-label">CGPA</span></div>
+        <!-- About Section — Dark bg -->
+        <div id="about-wrap" class="dark-section">
+            <section id="about">
+                <div class="section-eyebrow reveal">The developer</div>
+                <h2 class="section-title reveal">Behind the <span class="accent-text">code</span></h2>
+                <div class="about-grid">
+                    <div class="about-story">
+                        <p class="reveal">Started in 2020 during a pandemic with nothing but curiosity, a laptop, and time. Found Flutter in 2023 and <strong>never looked back</strong>.</p>
+                        <p class="reveal">Today I build fintech products at Beyondco Technologies, integrating real money flows like <strong>Smallcase MF SDK</strong> and <strong>Finvu Account Aggregator</strong> into apps that people trust with their savings.</p>
+                        <p class="reveal">I don't just write code. I <strong>own features</strong> from requirement to deployment. Clean Architecture isn't a buzzword to me. It's how I think.</p>
+                        <div class="stats-grid">
+                            <div class="stat-card reveal"><span class="stat-num" data-count="2.7">0</span><span class="stat-label">Years Experience</span></div>
+                            <div class="stat-card reveal"><span class="stat-num" data-count="10">0</span><span class="stat-label">Features Shipped</span></div>
+                            <div class="stat-card reveal"><span class="stat-num" data-count="3">0</span><span class="stat-label">SDKs Integrated</span></div>
+                            <div class="stat-card reveal"><span class="stat-num" data-count="8.19">0</span><span class="stat-label">CGPA</span></div>
+                        </div>
+                    </div>
+                    <div class="about-card reveal">
+                        <div class="avatar">BN</div>
+                        <div class="about-name">Bhuvaneshwaran N</div>
+                        <div class="about-role">Flutter Developer · Fintech</div>
+                        <div class="badges">
+                            <span class="badge green"><span class="avail-dot"></span> Available for work</span>
+                            <span class="badge neutral">⚡ 2.7 yrs Production XP</span>
+                            <span class="badge neutral">🏗 Clean Architecture</span>
+                            <span class="badge gray">🎓 CSE · 8.19 CGPA</span>
+                        </div>
                     </div>
                 </div>
-                <div class="about-card reveal">
-                    <div class="avatar">BN</div>
-                    <div class="about-name">Bhuvaneshwaran N</div>
-                    <div class="about-role">Flutter Developer · Fintech</div>
-                    <div class="badges">
-                        <span class="badge violet">⚡ 2.7 yrs Production XP</span>
-                        <span class="badge violet">🏗 Clean Architecture</span>
-                        <span class="badge gray">🎓 CSE · 8.19 CGPA</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Skills Section -->
+        <!-- Skills Section — White bg -->
         <section id="skills">
             <div class="skills-inner">
                 <div class="section-eyebrow reveal">Arsenal</div>
@@ -189,7 +192,7 @@
             </div>
         </section>
 
-        <!-- Marquee Divider -->
+        <!-- Marquee Divider — Dark bg -->
         <div class="marquee-wrap">
             <div class="marquee-track" id="marquee">
                 <span class="marquee-item">Flutter <span>·</span></span>
@@ -211,7 +214,7 @@
             </div>
         </div>
 
-        <!-- Experience Section -->
+        <!-- Experience Section — #F2F2F2 bg -->
         <section id="experience">
             <div class="exp-inner">
                 <div class="section-eyebrow reveal">Journey</div>
@@ -251,7 +254,7 @@
                         </div>
                     </div>
                     <div class="timeline-item">
-                        <div class="timeline-dot" style="background:var(--text-sec);box-shadow:none"></div>
+                        <div class="timeline-dot" style="background:var(--text-muted)"></div>
                         <div class="exp-card">
                             <div class="exp-header">
                                 <div>
@@ -283,112 +286,116 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section id="projects">
-            <div class="projects-inner">
-                <div class="section-eyebrow reveal">Work</div>
-                <h2 class="section-title reveal">Things I've <span class="accent-text">built</span></h2>
-                <div class="projects-grid">
-                    <div class="proj-card" style="animation-delay:0.1s">
-                        <div class="proj-icon">🏦</div>
-                        <div class="proj-type">Production · Fintech</div>
-                        <div class="proj-name">SafeBox</div>
-                        <p class="proj-desc">Personal finance + investment platform. Mutual fund purchases, account aggregation, loan flows built for real users trusting it with real money.</p>
-                        <div class="proj-footer">
-                            <div class="proj-tags">
-                                <span class="tag">Flutter</span>
-                                <span class="tag">Smallcase SDK</span>
-                                <span class="tag">Clean Arch</span>
+        <!-- Projects Section — Dark bg -->
+        <div id="projects-wrap" class="dark-section">
+            <section id="projects">
+                <div class="projects-inner">
+                    <div class="section-eyebrow reveal">Work</div>
+                    <h2 class="section-title reveal">Things I've <span class="accent-text">built</span></h2>
+                    <div class="projects-grid">
+                        <div class="proj-card" style="animation-delay:0.1s">
+                            <div class="proj-icon">🏦</div>
+                            <div class="proj-type">Production · Fintech</div>
+                            <div class="proj-name">SafeBox</div>
+                            <p class="proj-desc">Personal finance + investment platform. Mutual fund purchases, account aggregation, loan flows built for real users trusting it with real money.</p>
+                            <div class="proj-footer">
+                                <div class="proj-tags">
+                                    <span class="tag">Flutter</span>
+                                    <span class="tag">Smallcase SDK</span>
+                                    <span class="tag">Clean Arch</span>
+                                </div>
+                                <a href="https://github.com/bhuvaneshwaranoffl" class="proj-link" target="_blank">View →</a>
                             </div>
-                            <a href="https://github.com/bhuvaneshwaranoffl" class="proj-link" target="_blank">View →</a>
                         </div>
-                    </div>
-                    <div class="proj-card" style="animation-delay:0.2s">
-                        <div class="proj-icon">🎮</div>
-                        <div class="proj-type">Windows + Mobile · Billing</div>
-                        <div class="proj-name">GameCafe Manager</div>
-                        <p class="proj-desc">Cross-platform billing solution for gaming cafés. GST engine, real-time session tracking, PDF reports, multi-role staff management.</p>
-                        <div class="proj-footer">
-                            <div class="proj-tags">
-                                <span class="tag">Flutter Windows</span>
-                                <span class="tag">Node.js</span>
-                                <span class="tag">MongoDB</span>
+                        <div class="proj-card" style="animation-delay:0.2s">
+                            <div class="proj-icon">🎮</div>
+                            <div class="proj-type">Windows + Mobile · Billing</div>
+                            <div class="proj-name">GameCafe Manager</div>
+                            <p class="proj-desc">Cross-platform billing solution for gaming cafés. GST engine, real-time session tracking, PDF reports, multi-role staff management.</p>
+                            <div class="proj-footer">
+                                <div class="proj-tags">
+                                    <span class="tag">Flutter Windows</span>
+                                    <span class="tag">Node.js</span>
+                                    <span class="tag">MongoDB</span>
+                                </div>
+                                <a href="https://github.com/bhuvaneshwaranoffl" class="proj-link" target="_blank">View →</a>
                             </div>
-                            <a href="https://github.com/bhuvaneshwaranoffl" class="proj-link" target="_blank">View →</a>
                         </div>
-                    </div>
-                    <div class="proj-card wip" style="animation-delay:0.3s">
-                        <span class="wip-badge">⚡ In Progress · Aug 2026</span>
-                        <div class="proj-icon">📊</div>
-                        <div class="proj-type">Offline First · Personal Finance</div>
-                        <div class="proj-name">Fintrack</div>
-                        <p class="proj-desc">Personal finance tracker with offline-first architecture, beautiful data visualizations, and budget intelligence. Clean Architecture done right.</p>
-                        <div class="proj-footer">
-                            <div class="proj-tags">
-                                <span class="tag">Flutter</span>
-                                <span class="tag">SQLite</span>
-                                <span class="tag">Riverpod</span>
+                        <div class="proj-card wip" style="animation-delay:0.3s">
+                            <span class="wip-badge">⚡ In Progress · Aug 2026</span>
+                            <div class="proj-icon">📊</div>
+                            <div class="proj-type">Offline First · Personal Finance</div>
+                            <div class="proj-name">Fintrack</div>
+                            <p class="proj-desc">Personal finance tracker with offline-first architecture, beautiful data visualizations, and budget intelligence. Clean Architecture done right.</p>
+                            <div class="proj-footer">
+                                <div class="proj-tags">
+                                    <span class="tag">Flutter</span>
+                                    <span class="tag">SQLite</span>
+                                    <span class="tag">Riverpod</span>
+                                </div>
+                                <a href="https://github.com/bhuvaneshwaranoffl" class="proj-link" target="_blank">Watch →</a>
                             </div>
-                            <a href="https://github.com/bhuvaneshwaranoffl" class="proj-link" target="_blank">Watch →</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <!-- Quote Section -->
+        <!-- Quote Section — White bg -->
         <section id="quote">
             <div class="quote-bg">CODE</div>
             <p class="quote-text reveal">"Ship features, not <em>excuses.</em> Own the code, don't rent it."</p>
             <p class="quote-attr reveal">The principle I actually live by</p>
         </section>
 
-        <!-- Contact Section -->
-        <section id="contact">
-            <div class="section-eyebrow reveal">Get in touch</div>
-            <h2 class="section-title reveal">Let's build something <span class="accent-text">great</span></h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <p class="contact-intro reveal">Let's talk about your next fintech product or collaboration.</p>
-                    <a href="mailto:bhuvaneshwaranoffl@gmail.com" class="contact-item reveal">
-                        <div class="c-icon">📧</div>
-                        <div><div class="c-label">Email</div><div class="c-value">bhuvaneshwaranoffl@gmail.com</div></div>
-                    </a>
-                    <a href="https://linkedin.com/in/bhuvaneshwaran-n" target="_blank" class="contact-item reveal">
-                        <div class="c-icon">💼</div>
-                        <div><div class="c-label">LinkedIn</div><div class="c-value">linkedin.com/in/bhuvaneshwaran-n</div></div>
-                    </a>
-                    <a href="https://github.com/bhuvaneshwaranoffl" target="_blank" class="contact-item reveal">
-                        <div class="c-icon">🐙</div>
-                        <div><div class="c-label">GitHub</div><div class="c-value">github.com/bhuvaneshwaranoffl</div></div>
-                    </a>
-                    <a href="tel:+918220226332" class="contact-item reveal">
-                        <div class="c-icon">📱</div>
-                        <div><div class="c-label">Phone</div><div class="c-value">+91 82202 26332</div></div>
-                    </a>
+        <!-- Contact Section — #F2F2F2 bg -->
+        <div id="contact-wrap">
+            <section id="contact">
+                <div class="section-eyebrow reveal">Get in touch</div>
+                <h2 class="section-title reveal">Let's build something <span class="accent-text">great</span></h2>
+                <div class="contact-grid">
+                    <div class="contact-info">
+                        <p class="contact-intro reveal">Let's talk about your next fintech product or collaboration.</p>
+                        <a href="mailto:bhuvaneshwaranoffl@gmail.com" class="contact-item reveal">
+                            <div class="c-icon">📧</div>
+                            <div><div class="c-label">Email</div><div class="c-value">bhuvaneshwaranoffl@gmail.com</div></div>
+                        </a>
+                        <a href="https://linkedin.com/in/bhuvaneshwaran-n" target="_blank" class="contact-item reveal">
+                            <div class="c-icon">💼</div>
+                            <div><div class="c-label">LinkedIn</div><div class="c-value">linkedin.com/in/bhuvaneshwaran-n</div></div>
+                        </a>
+                        <a href="https://github.com/bhuvaneshwaranoffl" target="_blank" class="contact-item reveal">
+                            <div class="c-icon">🐙</div>
+                            <div><div class="c-label">GitHub</div><div class="c-value">github.com/bhuvaneshwaranoffl</div></div>
+                        </a>
+                        <a href="tel:+918220226332" class="contact-item reveal">
+                            <div class="c-icon">📱</div>
+                            <div><div class="c-label">Phone</div><div class="c-value">+91 82202 26332</div></div>
+                        </a>
+                    </div>
+                    <div class="reveal">
+                        <form action="mailto:bhuvaneshwaranoffl@gmail.com" method="post" enctype="text/plain">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" placeholder="Tell me about the role or project..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send message →</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="reveal">
-                    <form action="mailto:bhuvaneshwaranoffl@gmail.com" method="post" enctype="text/plain">
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" placeholder="Your name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="your@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" placeholder="Tell me about the role or project..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send message →</button>
-                    </form>
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer — Dark bg -->
     <footer>
         <div class="footer-copy">Built with HTML, CSS &amp; obsession · Bhuvaneshwaran N · 2026</div>
         <div class="footer-links">

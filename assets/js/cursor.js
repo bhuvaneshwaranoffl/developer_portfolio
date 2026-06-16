@@ -26,7 +26,7 @@ export function initCursor() {
         // Detect if cursor is over a dark section
         const el = document.elementFromPoint(mx, my);
         if (el) {
-            const darkParent = el.closest('.dark-section, .marquee-wrap, footer');
+            const darkParent = el.closest('.dark-section, .marquee-wrap, footer, .modal-content');
             const nowOnDark = !!darkParent;
             if (nowOnDark !== isOnDark) {
                 isOnDark = nowOnDark;

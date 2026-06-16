@@ -76,10 +76,47 @@ export function initAnimations() {
     document.querySelectorAll('.stat-card').forEach(el => statObserver.observe(el));
 
     // =============================================
-    // 5. SCROLL PARALLAX
+    // 5. SCROLL FILL TEXT & PARALLAX
     // =============================================
+    
+    // Split paragraphs into words
+    const fillParagraphs = document.querySelectorAll('.scroll-fill-paragraph');
+    fillParagraphs.forEach(p => {
+        const words = p.innerText.split(' ');
+        p.innerHTML = words.map(w => `<span class="fill-word">${w}</span>`).join(' ');
+    });
+
+    let fillLines = [];
+    function calculateLines() {
+        fillLines = [];
+        fillParagraphs.forEach(p => {
+            let currentLine = [];
+            let lastTop = -1;
+            const words = Array.from(p.querySelectorAll('.fill-word'));
+            
+            words.forEach(w => {
+                const top = w.offsetTop;
+                if (lastTop !== -1 && Math.abs(top - lastTop) > 5) {
+                    fillLines.push(currentLine);
+                    currentLine = [];
+                }
+                currentLine.push(w);
+                lastTop = top;
+            });
+            if (currentLine.length > 0) {
+                fillLines.push(currentLine);
+            }
+        });
+    }
+
+    // Delay calculation slightly to ensure CSS/fonts are loaded and layout is stable
+    setTimeout(calculateLines, 100);
+    window.addEventListener('resize', calculateLines);
+
     window.addEventListener('scroll', () => {
         const sy = window.scrollY;
+        
+        // Hero Parallax
         const orbWrap = document.querySelector('.hero-orb-wrap');
         if (orbWrap) orbWrap.style.transform = `translateY(${sy * 0.18}px)`;
         const heroContent = document.querySelector('.hero-content');
@@ -87,6 +124,30 @@ export function initAnimations() {
 
         if (isDesktop) {
             updateFloatingObjects(sy);
+        }
+
+        // About Text Fill (Line by line)
+        const vh = window.innerHeight;
+        const container = document.querySelector('.scroll-fill-text-container');
+        if (container && fillLines.length > 0) {
+            const rect = container.getBoundingClientRect();
+            // Start revealing when container top is 80% down the screen
+            // Finish when container top is 30% down the screen
+            const startReveal = vh * 0.8;
+            const endReveal = vh * 0.3;
+            
+            let progress = (startReveal - rect.top) / (startReveal - endReveal);
+            progress = Math.max(0, Math.min(1, progress));
+
+            const totalLines = fillLines.length;
+            const linesToReveal = Math.floor(progress * totalLines);
+
+            fillLines.forEach((line, index) => {
+                const opacity = (index < linesToReveal) ? '1' : '0.15';
+                line.forEach(w => {
+                    w.style.opacity = opacity;
+                });
+            });
         }
     });
 
@@ -116,6 +177,7 @@ export function initAnimations() {
 // =============================================
 function animateCount(el) {
     const target = parseFloat(el.getAttribute('data-count'));
+    const hasPlus = el.hasAttribute('data-plus');
     const dec = target % 1 !== 0 ? 2 : 0;
     const dur = 1200, step = 16;
     let current = 0, elapsed = 0;
@@ -127,7 +189,7 @@ function animateCount(el) {
             current = target;
             clearInterval(timer);
         }
-        el.textContent = current.toFixed(dec) + (dec === 0 && target >= 10 ? '+' : '');
+        el.textContent = current.toFixed(dec) + (hasPlus || (dec === 0 && target >= 10) ? '+' : '');
     }, step);
 }
 

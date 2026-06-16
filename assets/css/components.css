@@ -12,7 +12,7 @@
     background: var(--dark);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 99999;
     transform: translate(-50%, -50%);
     transition: width 0.3s, height 0.3s, background 0.3s;
 }
@@ -24,7 +24,7 @@
     border: 1.5px solid var(--dark);
     border-radius: 50%;
     pointer-events: none;
-    z-index: 9998;
+    z-index: 99998;
     transform: translate(-50%, -50%);
     transition: transform 0.08s linear, width 0.3s, height 0.3s, opacity 0.3s, border-color 0.3s;
     opacity: 0.4;

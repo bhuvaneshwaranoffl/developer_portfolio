@@ -1,0 +1,114 @@
+/* =========================================
+   SKILLS SECTION — White bg
+   ========================================= */
+#skills {
+    padding: 6rem 4rem;
+    background: var(--bg);
+}
+
+.skills-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+}
+
+.skill-pill {
+    font-family: var(--font-code);
+    font-size: 0.78rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--border-strong);
+    color: var(--text-body);
+    background: var(--surface);
+    transition: all 0.3s;
+    cursor: default;
+    transform: translateY(20px);
+    opacity: 0;
+}
+
+.skill-pill.visible {
+    animation: pillIn 0.4s forwards;
+}
+
+@keyframes pillIn {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.skill-pill:hover {
+    background: var(--dark);
+    color: var(--text-white);
+    border-color: var(--dark);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.skill-pill.featured {
+    background: var(--dark);
+    border-color: var(--dark);
+    color: var(--text-white);
+    font-size: 0.85rem;
+    padding: 0.6rem 1.25rem;
+}
+
+.skill-pill.featured:hover {
+    background: var(--accent-hover);
+}
+
+.skill-category {
+    margin-bottom: 1.5rem;
+}
+
+.skill-cat-label {
+    font-family: var(--font-code);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+/* =========================================
+   MARQUEE DIVIDER — Dark bg
+   ========================================= */
+.marquee-wrap {
+    padding: 3rem 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    background: var(--dark);
+}
+
+.marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: marquee 20s linear infinite;
+    width: max-content;
+}
+
+.marquee-item {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.3);
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+}
+
+.marquee-item span {
+    color: var(--text-white);
+    margin-right: 3rem;
+}
+
+@keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}

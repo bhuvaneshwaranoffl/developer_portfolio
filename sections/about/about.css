@@ -1,0 +1,167 @@
+/* =========================================
+   ABOUT SECTION — Dark bg
+   ========================================= */
+#about {
+    padding: 8rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Dark wrapper for about */
+#about-wrap {
+    background: var(--dark);
+    color: var(--text-white);
+    position: relative;
+    z-index: 2;
+}
+
+#about-wrap .about-story p {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#about-wrap .about-story p strong {
+    color: var(--text-white);
+    font-weight: 600;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 5rem;
+    align-items: start;
+}
+
+.about-story .scroll-fill-paragraph {
+    color: var(--text-body);
+    line-height: 1.9;
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.fill-word {
+    transition: opacity 0.2s ease-out;
+    opacity: 0.15;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 3rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.stat-num {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-white);
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: var(--font-code);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.about-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 2rem;
+    position: sticky;
+    top: 8rem;
+}
+
+.avatar {
+    width: 72px;
+    height: 72px;
+    background: var(--text-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: var(--dark);
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+.about-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--text-white);
+}
+
+.about-role {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1.5rem;
+}
+
+.badges {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-top: 1rem;
+}
+
+/* Green badge on dark about */
+#about-wrap .badge.green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #4ade80;
+    border: 1px solid rgba(34, 197, 94, 0.25);
+}
+
+#about-wrap .badge.neutral,
+#about-wrap .badge.gray {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Avail dot — green */
+.avail-dot {
+    width: 7px;
+    height: 7px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #22c55e;
+    display: inline-block;
+    margin-right: 4px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 8px #22c55e; }
+    50% { box-shadow: 0 0 18px #22c55e; }
+}

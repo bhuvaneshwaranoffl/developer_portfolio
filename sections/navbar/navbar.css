@@ -25,6 +25,8 @@ nav.scrolled {
     color: var(--dark);
     letter-spacing: 0.05em;
     font-weight: 500;
+    position: relative;
+    z-index: 101;
 }
 
 .logo span {
@@ -89,11 +91,26 @@ nav.scrolled {
     flex-direction: column;
     gap: 5px;
     cursor: pointer;
+    position: relative;
+    z-index: 101;
 }
 
 .hamburger div {
     width: 25px;
     height: 2px;
     background-color: var(--dark);
-    transition: all 0.3s;
+    transition: all 0.3s ease;
+}
+
+/* Hamburger active animation */
+.hamburger.active div:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger.active div:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active div:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
 }

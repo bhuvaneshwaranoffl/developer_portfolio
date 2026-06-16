@@ -6,6 +6,16 @@
 
 @import url('variables.css');
 @import url('base.css');
+
+/* Section Stylesheets (Base Layout) */
+@import url('../../sections/navbar/navbar.css');
+@import url('../../sections/hero/hero.css');
+@import url('../../sections/about/about.css');
+@import url('../../sections/skills/skills.css');
+@import url('../../sections/experience/experience.css');
+@import url('../../sections/projects/projects.css');
+@import url('../../sections/contact/contact.css');
+
 @import url('components.css');
 @import url('sections.css');
 @import url('animations.css');

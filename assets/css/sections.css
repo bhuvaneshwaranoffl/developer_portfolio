@@ -66,20 +66,37 @@ footer {
         padding: 0.85rem 2rem;
     }
     .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
+        display: flex;
+        position: fixed;
+        top: 0;
         left: 0;
         width: 100%;
+        height: 100vh;
         flex-direction: column;
-        background: var(--bg);
-        padding: 2rem;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        padding: 6rem 2rem 2rem 2rem;
         text-align: center;
-        border-bottom: 1px solid var(--border);
-        gap: 1rem;
+        gap: 2rem;
+        justify-content: center;
+        align-items: center;
+        z-index: 99;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-15px);
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                    visibility 0.4s ease;
     }
     .nav-links.active {
-        display: flex;
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    .nav-links a {
+        font-size: 1.25rem;
+        color: var(--text-pri);
     }
     .hamburger {
         display: flex;
@@ -109,6 +126,13 @@ footer {
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
+    .about-card {
+        position: relative;
+        top: 0;
+    }
+    .timeline-item {
+        padding-left: 2rem;
+    }
     .projects-grid {
         grid-template-columns: 1fr;
     }
@@ -137,8 +161,29 @@ footer {
     .hero-actions {
         flex-direction: column;
     }
+    #about,
+    #skills,
+    #experience,
+    #projects,
+    #contact {
+        padding: 4rem 1.25rem;
+    }
+    nav {
+        padding: 1rem 1.25rem !important;
+    }
+    nav.scrolled {
+        padding: 0.75rem 1.25rem !important;
+    }
     .stats-grid {
         grid-template-columns: 1fr;
+    }
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+    .footer-links {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
     }
 }
 

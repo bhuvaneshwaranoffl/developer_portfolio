@@ -137,3 +137,20 @@
     flex-wrap: wrap;
     gap: 0.5rem;
 }
+
+@media (max-width: 768px) {
+    .exp-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .exp-header > div:last-child {
+        text-align: left !important;
+        margin-top: 0.25rem;
+    }
+    
+    .exp-period {
+        margin-top: 0.25rem !important;
+    }
+}

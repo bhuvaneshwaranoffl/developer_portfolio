@@ -18,12 +18,14 @@ export function initNavigation() {
     if (hamburger && navLinks) {
         hamburger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
         });
 
         // Close menu on link click
         navLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
+                hamburger.classList.remove('active');
             });
         });
     }

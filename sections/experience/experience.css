@@ -55,7 +55,29 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     padding: 2rem;
-    transition: all 0.3s;
+    transition: border-color 0.4s, box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.exp-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+        rgba(0, 0, 0, 0.04),
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.exp-card:hover::before {
+    opacity: 1;
 }
 
 .exp-card:hover {

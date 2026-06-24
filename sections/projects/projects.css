@@ -28,32 +28,26 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 2rem;
-    transition: all 0.4s;
+    transition: border-color 0.4s, box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.proj-card.visible {
-    animation: cardIn 0.5s forwards;
-}
-
-@keyframes cardIn {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    transform-style: preserve-3d;
+    will-change: transform;
 }
 
 .proj-card::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), transparent 60%);
+    background: radial-gradient(
+        circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+        rgba(255, 255, 255, 0.10),
+        transparent 50%
+    );
     opacity: 0;
-    transition: opacity 0.4s;
+    transition: opacity 0.5s;
+    pointer-events: none;
 }
 
 .proj-card:hover::before {
@@ -63,7 +57,6 @@
 .proj-card:hover {
     border-color: rgba(255, 255, 255, 0.2);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-    transform: translateY(-6px) rotateX(2deg);
 }
 
 .proj-icon {
@@ -130,13 +123,7 @@
     color: var(--text-white);
 }
 
-.proj-card.wip {
-    opacity: 0;
-}
-
-.proj-card.wip.visible {
-    animation: cardIn 0.5s forwards;
-}
+/* WIP cards are handled by GSAP stagger reveal */
 
 .wip-badge {
     background: rgba(251, 191, 36, 0.12);

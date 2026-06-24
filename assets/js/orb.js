@@ -3,6 +3,9 @@
  * 3D wireframe sphere — B&W theme.
  * Black wireframe on white bg, mouse-interactive rotation,
  * floating tech labels on the surface.
+ *
+ * PERF: IntersectionObserver pauses the rAF loop when the hero
+ * section scrolls out of view. Passive mousemove listener.
  */
 export function initOrb() {
     const orbCanvas = document.getElementById('orb-canvas');
@@ -16,15 +19,16 @@ export function initOrb() {
         oH = orbCanvas.height = orbCanvas.offsetHeight;
     }
     resizeOrb();
-    window.addEventListener('resize', resizeOrb);
+    window.addEventListener('resize', resizeOrb, { passive: true });
 
     let orbAngleX = 0, orbAngleY = 0;
     let mouseInfluenceX = 0, mouseInfluenceY = 0;
 
     document.addEventListener('mousemove', (e) => {
+        if (!isVisible) return;
         mouseInfluenceX = (e.clientX / window.innerWidth - 0.5) * 0.3;
         mouseInfluenceY = (e.clientY / window.innerHeight - 0.5) * 0.3;
-    });
+    }, { passive: true });
 
     function project3D(x, y, z, cx, cy, fov) {
         const scale = fov / (fov + z);
@@ -48,6 +52,8 @@ export function initOrb() {
     }
 
     function drawOrb() {
+        if (!isVisible) return;
+
         ctx.clearRect(0, 0, oW, oH);
         const cx = oW / 2, cy = oH / 2;
         const R = Math.min(oW, oH) * 0.38;
@@ -156,7 +162,26 @@ export function initOrb() {
             }
         });
 
-        requestAnimationFrame(drawOrb);
+        rafId = requestAnimationFrame(drawOrb);
     }
-    drawOrb();
+
+    // IntersectionObserver — pause when hero section is not visible
+    let isVisible = false;
+    let rafId;
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            if (!isVisible) {
+                isVisible = true;
+                drawOrb();
+            }
+        } else {
+            isVisible = false;
+            cancelAnimationFrame(rafId);
+        }
+    }, { threshold: 0 });
+
+    // Observe the orb's parent container (hero-orb-wrap or the canvas itself)
+    const orbParent = orbCanvas.closest('.hero-orb-wrap') || orbCanvas;
+    observer.observe(orbParent);
 }

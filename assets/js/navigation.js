@@ -9,7 +9,7 @@ export function initNavigation() {
     // Navbar glassmorphism on scroll
     window.addEventListener('scroll', () => {
         navbar.classList.toggle('scrolled', window.scrollY > 50);
-    });
+    }, { passive: true });
 
     // Mobile Hamburger Menu
     const hamburger = document.querySelector('.hamburger');

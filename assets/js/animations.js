@@ -1,13 +1,10 @@
 /**
  * animations.js
- * 
- * Scroll-driven animation engine.
- * - Intersection Observer for element reveals
- * - Counter animation for stats
- * - Staggered skill pill reveals
- * - Scroll parallax for hero and orb
- * - 3D tilt hover for project cards
- * - Floating 3D decorative objects
+ *
+ * GSAP ScrollTrigger-driven animation engine.
+ * Zero native scroll listeners. All parallax, reveals, text fills,
+ * tilt hovers, and floating objects run through GSAP's batched pipeline
+ * which is synced to Lenis via the shared gsap.ticker rAF loop.
  */
 export function initAnimations() {
     const isDesktop = window.matchMedia("(min-width: 1025px)").matches;
@@ -16,157 +13,197 @@ export function initAnimations() {
     if (prefersReducedMotion) return;
 
     // =============================================
-    // 1. CREATE FLOATING 3D OBJECTS
+    // 1. FLOATING 3D OBJECTS — GSAP scrub parallax
     // =============================================
     if (isDesktop) {
         createFloatingObjects();
     }
 
     // =============================================
-    // 2. INTERSECTION OBSERVER — Reveals
+    // 2. CINEMATIC REVEALS — blur→sharp, staggered
     // =============================================
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                revealObserver.unobserve(entry.target);
+
+    // Generic .reveal elements (eyebrows, titles, misc)
+    gsap.utils.toArray('.reveal').forEach((el) => {
+        gsap.fromTo(el,
+            { opacity: 0, y: 40, filter: 'blur(6px)' },
+            {
+                opacity: 1, y: 0, filter: 'blur(0px)',
+                duration: 0.9,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: el,
+                    start: 'top 88%',
+                    toggleActions: 'play none none none',
+                },
             }
-        });
-    }, {
-        threshold: 0.15,
-        rootMargin: "0px 0px -80px 0px"
+        );
     });
 
-    // Observe all revealable elements
-    document.querySelectorAll('.reveal, .timeline-item, .proj-card').forEach(el => {
-        revealObserver.observe(el);
+    // Timeline items — staggered slide-in
+    gsap.utils.toArray('.timeline').forEach((timeline) => {
+        const items = timeline.querySelectorAll('.timeline-item');
+        if (!items.length) return;
+        items.forEach((item) => {
+            // Reset the CSS initial state so GSAP can take over
+            item.style.opacity = '';
+            item.style.transform = '';
+        });
+        gsap.fromTo(items,
+            { opacity: 0, x: 40, filter: 'blur(4px)' },
+            {
+                opacity: 1, x: 0, filter: 'blur(0px)',
+                stagger: 0.15,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: { trigger: timeline, start: 'top 82%' },
+            }
+        );
+    });
+
+    // Project cards — staggered fade-up
+    gsap.utils.toArray('.projects-grid').forEach((grid) => {
+        const cards = grid.querySelectorAll('.proj-card');
+        if (!cards.length) return;
+        cards.forEach((c) => { c.style.opacity = ''; c.style.transform = ''; });
+        gsap.fromTo(cards,
+            { opacity: 0, y: 50, scale: 0.97 },
+            {
+                opacity: 1, y: 0, scale: 1,
+                stagger: 0.12,
+                duration: 0.8,
+                ease: 'power2.out',
+                scrollTrigger: { trigger: grid, start: 'top 82%' },
+            }
+        );
     });
 
     // =============================================
-    // 3. SKILL PILLS — Staggered animation
+    // 3. SKILL PILLS — staggered scatter-in
     // =============================================
-    const pillObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const pills = entry.target.querySelectorAll('.skill-pill');
-                pills.forEach((p, i) => {
-                    p.style.animationDelay = i * 40 + 'ms';
-                    p.classList.add('visible');
-                });
-                pillObserver.unobserve(entry.target);
+    gsap.utils.toArray('.skills-inner').forEach((container) => {
+        const pills = container.querySelectorAll('.skill-pill');
+        if (!pills.length) return;
+        gsap.fromTo(pills,
+            { opacity: 0, y: 12, scale: 0.88 },
+            {
+                opacity: 1, y: 0, scale: 1,
+                stagger: 0.035,
+                duration: 0.45,
+                ease: 'back.out(1.4)',
+                scrollTrigger: { trigger: container, start: 'top 82%' },
             }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.skills-inner').forEach(el => pillObserver.observe(el));
-
-    // =============================================
-    // 4. STAT COUNTERS — Count up animation
-    // =============================================
-    const statObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const num = entry.target.querySelector('[data-count]');
-                if (num) animateCount(num);
-                statObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.stat-card').forEach(el => statObserver.observe(el));
-
-    // =============================================
-    // 5. SCROLL FILL TEXT & PARALLAX
-    // =============================================
-    
-    // Split paragraphs into words
-    const fillParagraphs = document.querySelectorAll('.scroll-fill-paragraph');
-    fillParagraphs.forEach(p => {
-        const words = p.innerText.split(' ');
-        p.innerHTML = words.map(w => `<span class="fill-word">${w}</span>`).join(' ');
+        );
     });
 
-    let fillLines = [];
-    function calculateLines() {
-        fillLines = [];
-        fillParagraphs.forEach(p => {
-            let currentLine = [];
-            let lastTop = -1;
-            const words = Array.from(p.querySelectorAll('.fill-word'));
-            
-            words.forEach(w => {
-                const top = w.offsetTop;
-                if (lastTop !== -1 && Math.abs(top - lastTop) > 5) {
-                    fillLines.push(currentLine);
-                    currentLine = [];
-                }
-                currentLine.push(w);
-                lastTop = top;
-            });
-            if (currentLine.length > 0) {
-                fillLines.push(currentLine);
-            }
+    // =============================================
+    // 4. STAT COUNTERS — count-up on enter
+    // =============================================
+    document.querySelectorAll('.stat-card').forEach((card) => {
+        const numEl = card.querySelector('[data-count]');
+        if (!numEl) return;
+        ScrollTrigger.create({
+            trigger: card,
+            start: 'top 88%',
+            once: true,
+            onEnter: () => animateCount(numEl),
+        });
+    });
+
+    // =============================================
+    // 5. HERO PARALLAX — scrub (no native scroll!)
+    // =============================================
+    const heroContainer = document.getElementById('hero-container');
+    if (heroContainer) {
+        gsap.to('.hero-orb-wrap', {
+            yPercent: 25,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: heroContainer,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+            },
+        });
+        gsap.to('.hero-content', {
+            yPercent: 12,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: heroContainer,
+                start: 'top top',
+                end: 'bottom top',
+                scrub: true,
+            },
         });
     }
 
-    // Delay calculation slightly to ensure CSS/fonts are loaded and layout is stable
-    setTimeout(calculateLines, 100);
-    window.addEventListener('resize', calculateLines);
+    // =============================================
+    // 6. SCROLL-FILL TEXT — scrub word opacity
+    // =============================================
+    const fillParagraphs = document.querySelectorAll('.scroll-fill-paragraph');
+    fillParagraphs.forEach((p) => {
+        const raw = p.innerText;
+        const words = raw.split(' ');
+        p.innerHTML = words.map((w) => `<span class="fill-word">${w}</span>`).join(' ');
 
-    window.addEventListener('scroll', () => {
-        const sy = window.scrollY;
-        
-        // Hero Parallax
-        const orbWrap = document.querySelector('.hero-orb-wrap');
-        if (orbWrap) orbWrap.style.transform = `translateY(${sy * 0.18}px)`;
-        const heroContent = document.querySelector('.hero-content');
-        if (heroContent) heroContent.style.transform = `translateY(${sy * 0.08}px)`;
-
-        if (isDesktop) {
-            updateFloatingObjects(sy);
-        }
-
-        // About Text Fill (Line by line)
-        const vh = window.innerHeight;
-        const container = document.querySelector('.scroll-fill-text-container');
-        if (container && fillLines.length > 0) {
-            const rect = container.getBoundingClientRect();
-            // Start revealing when container top is 80% down the screen
-            // Finish when container top is 30% down the screen
-            const startReveal = vh * 0.8;
-            const endReveal = vh * 0.3;
-            
-            let progress = (startReveal - rect.top) / (startReveal - endReveal);
-            progress = Math.max(0, Math.min(1, progress));
-
-            const totalLines = fillLines.length;
-            const linesToReveal = Math.floor(progress * totalLines);
-
-            fillLines.forEach((line, index) => {
-                const opacity = (index < linesToReveal) ? '1' : '0.15';
-                line.forEach(w => {
-                    w.style.opacity = opacity;
-                });
-            });
-        }
+        gsap.to(p.querySelectorAll('.fill-word'), {
+            opacity: 1,
+            stagger: 0.06,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: p,
+                start: 'top 85%',
+                end: 'bottom 50%',
+                scrub: 0.6,
+            },
+        });
     });
 
     // =============================================
-    // 6. 3D TILT HOVER — Project Cards
+    // 7. 3D TILT + RIPPLE HOVER — project/stat/exp cards
     // =============================================
     if (isDesktop) {
-        document.querySelectorAll('.proj-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
+        document.querySelectorAll('.proj-card, .stat-card, .exp-card').forEach((card) => {
+            // Tilt on mousemove
+            card.addEventListener('mousemove', (e) => {
                 const r = card.getBoundingClientRect();
-                const x = (e.clientX - r.left) / r.width - 0.5;
-                const y = (e.clientY - r.top) / r.height - 0.5;
-                card.style.transform = `translateY(-6px) rotateX(${-y * 8}deg) rotateY(${x * 8}deg)`;
-                card.style.transition = 'transform 0.1s';
-            });
+                const px = e.clientX - r.left;
+                const py = e.clientY - r.top;
+
+                // Ripple position CSS vars
+                card.style.setProperty('--ripple-x', `${px}px`);
+                card.style.setProperty('--ripple-y', `${py}px`);
+
+                // Normalized -0.5…0.5
+                const nx = px / r.width - 0.5;
+                const ny = py / r.height - 0.5;
+
+                const isProjCard = card.classList.contains('proj-card');
+                const maxRot = isProjCard ? 8 : 4;
+                const lift = isProjCard ? -6 : -3;
+
+                // Use GSAP for spring-like easing instead of direct assignment
+                gsap.to(card, {
+                    rotateX: -ny * maxRot,
+                    rotateY: nx * maxRot,
+                    y: lift,
+                    duration: 0.4,
+                    ease: 'power2.out',
+                    overwrite: 'auto',
+                });
+            }, { passive: true });
+
+            // Spring-back on leave
             card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-                card.style.transition = 'transform 0.5s';
-            });
+                gsap.to(card, {
+                    rotateX: 0,
+                    rotateY: 0,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'elastic.out(1, 0.4)',
+                    overwrite: 'auto',
+                });
+            }, { passive: true });
         });
     }
 }
@@ -195,10 +232,8 @@ function animateCount(el) {
 
 
 // =============================================
-// FLOATING 3D OBJECTS SYSTEM
+// FLOATING 3D OBJECTS — GSAP scrub parallax
 // =============================================
-const floatingObjects = [];
-
 function createFloatingObjects() {
     const shapes = [
         { cls: 'shape-diamond', x: '8%',  y: '25%', speed: 0.3,  anim: 'float3',  dur: '12s' },
@@ -211,7 +246,7 @@ function createFloatingObjects() {
         { cls: 'shape-hex',     x: '50%', y: '45%', speed: -0.28,anim: 'float1',  dur: '19s' },
     ];
 
-    shapes.forEach(s => {
+    shapes.forEach((s) => {
         const el = document.createElement('div');
         el.className = `scene-object ${s.cls}`;
         el.style.left = s.x;
@@ -220,23 +255,20 @@ function createFloatingObjects() {
         el.style.opacity = '0';
         document.body.appendChild(el);
 
-        floatingObjects.push({ el, speed: s.speed, baseY: parseFloat(s.y) });
+        // Fade in
+        gsap.to(el, { opacity: 0.6, duration: 1, delay: 0.5 });
 
-        setTimeout(() => { el.style.opacity = '0.6'; }, 500);
-    });
-}
-
-function updateFloatingObjects(scrollY) {
-    const vh = window.innerHeight;
-
-    floatingObjects.forEach(obj => {
-        const offset = scrollY * obj.speed;
-        const rotation = scrollY * obj.speed * 0.5;
-        obj.el.style.transform = `translateY(${offset}px) rotate(${rotation}deg)`;
-
-        const rect = obj.el.getBoundingClientRect();
-        const distFromCenter = Math.abs(rect.top + rect.height / 2 - vh / 2);
-        const opacity = Math.max(0.1, Math.min(0.7, 1 - distFromCenter / vh));
-        obj.el.style.opacity = opacity;
+        // Multi-layer parallax — each object scrolls at a different rate
+        gsap.to(el, {
+            y: () => window.innerHeight * s.speed,
+            rotation: () => 360 * s.speed * 0.15,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: document.body,
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+            },
+        });
     });
 }

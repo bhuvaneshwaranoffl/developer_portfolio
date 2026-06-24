@@ -9,6 +9,36 @@ import { initAnimations } from './animations.js';
 import { initBackground } from './background.js';
 import { initOrb } from './orb.js';
 import { initModal } from './modal.js';
+import { initSkillsPhysics } from './skills-physics.js';
+
+// Catch errors and show them on screen
+window.addEventListener('error', (e) => {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.position = 'fixed';
+    errorDiv.style.top = '0';
+    errorDiv.style.left = '0';
+    errorDiv.style.background = 'red';
+    errorDiv.style.color = 'white';
+    errorDiv.style.padding = '10px';
+    errorDiv.style.zIndex = '999999';
+    errorDiv.style.fontFamily = 'monospace';
+    errorDiv.innerText = `Error: ${e.message}\nAt: ${e.filename}:${e.lineno}`;
+    document.body.appendChild(errorDiv);
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.position = 'fixed';
+    errorDiv.style.top = '100px';
+    errorDiv.style.left = '0';
+    errorDiv.style.background = 'orange';
+    errorDiv.style.color = 'black';
+    errorDiv.style.padding = '10px';
+    errorDiv.style.zIndex = '999999';
+    errorDiv.style.fontFamily = 'monospace';
+    errorDiv.innerText = `Promise Rejection: ${e.reason}`;
+    document.body.appendChild(errorDiv);
+});
 
 // Load HTML sections
 async function loadSection(id, path) {
@@ -71,4 +101,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     initOrb();
     initAnimations();
     initModal();
+    initSkillsPhysics();
 });

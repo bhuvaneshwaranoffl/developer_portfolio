@@ -78,23 +78,7 @@ export function initAnimations() {
         );
     });
 
-    // =============================================
-    // 3. SKILL PILLS — staggered scatter-in
-    // =============================================
-    gsap.utils.toArray('.skills-inner').forEach((container) => {
-        const pills = container.querySelectorAll('.skill-pill');
-        if (!pills.length) return;
-        gsap.fromTo(pills,
-            { opacity: 0, y: 12, scale: 0.88 },
-            {
-                opacity: 1, y: 0, scale: 1,
-                stagger: 0.035,
-                duration: 0.45,
-                ease: 'back.out(1.4)',
-                scrollTrigger: { trigger: container, start: 'top 82%' },
-            }
-        );
-    });
+    // Skill pills are handled by Matter.js physics sandbox (skills-physics.js)
 
     // =============================================
     // 4. STAT COUNTERS — count-up on enter

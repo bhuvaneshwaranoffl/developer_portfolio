@@ -16,11 +16,16 @@ export function initModal() {
         descEl.textContent = desc;
         modal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        if (window.lenis) window.lenis.stop(); // Pause Lenis smooth scroll
     }
+
+    // Expose globally for physics sandbox click detection
+    window.openSkillModal = openModal;
 
     function closeModal() {
         modal.classList.remove('active');
         document.body.style.overflow = '';
+        if (window.lenis) window.lenis.start(); // Resume Lenis
     }
 
     skillPills.forEach(pill => {

@@ -33,8 +33,10 @@ export function initSkillsPhysics() {
     };
 
     window.debugLog('initSkillsPhysics called');
-
-    // IntersectionObserver — start on first visibility, pause/resume after
+    if (!sandbox || !dataSource || typeof Matter === 'undefined') {
+        window.debugLog('Early return: sandbox=' + !!sandbox + ' dataSource=' + !!dataSource + ' Matter=' + typeof Matter);
+        return;
+    }
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
@@ -57,10 +59,12 @@ export function initSkillsPhysics() {
 
 
 function startPhysics(sandbox, dataSource) {
+    window.debugLog('startPhysics called');
     const { Engine, World, Bodies, Composite, Mouse, MouseConstraint, Runner, Body } = Matter;
 
     // 1. Read pills from SEO data source
     const rawPills = dataSource.querySelectorAll('.skill-pill');
+    window.debugLog('rawPills length: ' + rawPills.length);
     const pillsToSpawn = [];
 
     // Temporarily create hidden pills inside the sandbox to measure their size

@@ -63,8 +63,38 @@
       ]
     }
     </script>
+
+    <!-- Splash Screen Styles -->
+    <style>
+        #splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #FAFAFA;
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .splash-text {
+            color: #0C0C0C;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: clamp(2rem, 5vw, 4rem);
+            white-space: nowrap;
+            letter-spacing: -0.02em;
+        }
+    </style>
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div class="splash-text">Bhuvaneshwaran N</div>
+    </div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot"></div>

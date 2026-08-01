@@ -37,10 +37,41 @@ async function loadAllSections() {
 
 // Wait for DOM to load
 document.addEventListener('DOMContentLoaded', async () => {
+    // Hide scrolling initially
+    document.body.style.overflow = 'hidden';
+
     // 1. Fetch and inject all HTML sections
     await loadAllSections();
 
-    // 2. Initialize Lenis smooth scrolling — tuned for premium feel
+    // 2. Play Splash Screen Animation
+    const splashScreen = document.getElementById('splash-screen');
+    const splashText = splashScreen.querySelector('.splash-text');
+
+    const tl = gsap.timeline({
+        onComplete: () => {
+            splashScreen.style.display = 'none';
+            document.body.style.overflow = '';
+            // 6. Refresh ScrollTrigger after all content is visible
+            requestAnimationFrame(() => {
+                ScrollTrigger.refresh();
+            });
+        }
+    });
+
+    tl.to(splashText, {
+        scale: 25,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.inOut',
+        delay: 0.3
+    })
+    .to(splashScreen, {
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.inOut'
+    }, "-=0.6");
+
+    // 3. Initialize Lenis smooth scrolling — tuned for premium feel
     const lenis = new Lenis({
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -87,9 +118,4 @@ document.addEventListener('DOMContentLoaded', async () => {
     initOrb();
     initAnimations();
     initModal();
-
-    // 6. Refresh ScrollTrigger after all content is loaded and painted
-    requestAnimationFrame(() => {
-        ScrollTrigger.refresh();
-    });
 });

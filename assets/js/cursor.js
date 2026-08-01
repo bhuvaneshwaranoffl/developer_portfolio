@@ -54,8 +54,38 @@ export function initCursor() {
         interactables.forEach(el => {
             if (el.dataset.cursorAttached) return;
             el.dataset.cursorAttached = 'true';
+            
             el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+
+            // Magnetic effect for buttons and nav links
+            if (el.classList.contains('btn') || el.closest('.nav-links')) {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const centerX = rect.left + rect.width / 2;
+                    const centerY = rect.top + rect.height / 2;
+                    const deltaX = e.clientX - centerX;
+                    const deltaY = e.clientY - centerY;
+                    
+                    gsap.to(el, {
+                        x: deltaX * 0.3,
+                        y: deltaY * 0.3,
+                        duration: 0.4,
+                        ease: 'power2.out',
+                        overwrite: 'auto'
+                    });
+                });
+                
+                el.addEventListener('mouseleave', () => {
+                    gsap.to(el, {
+                        x: 0,
+                        y: 0,
+                        duration: 0.8,
+                        ease: 'elastic.out(1, 0.3)',
+                        overwrite: 'auto'
+                    });
+                });
+            }
         });
     }
 

@@ -13,6 +13,40 @@ export function initAnimations() {
     if (prefersReducedMotion) return;
 
     // =============================================
+    // 0. KINETIC TYPOGRAPHY (Hover Scramble)
+    // =============================================
+    if (isDesktop) {
+        document.querySelectorAll('.hero-title .word').forEach(word => {
+            // Keep original text on the DOM element for reference
+            const originalText = word.innerText;
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*";
+            let interval = null;
+            
+            word.addEventListener('mouseenter', () => {
+                let iterations = 0;
+                clearInterval(interval);
+                
+                interval = setInterval(() => {
+                    word.innerText = word.innerText.split('')
+                        .map((letter, index) => {
+                            if (index < iterations) {
+                                return originalText[index];
+                            }
+                            return letters[Math.floor(Math.random() * letters.length)];
+                        })
+                        .join('');
+                    
+                    if (iterations >= originalText.length) {
+                        clearInterval(interval);
+                        word.innerText = originalText;
+                    }
+                    iterations += 1 / 3;
+                }, 30);
+            });
+        });
+    }
+
+    // =============================================
     // 1. FLOATING 3D OBJECTS — refined, minimal
     // =============================================
     if (isDesktop) {

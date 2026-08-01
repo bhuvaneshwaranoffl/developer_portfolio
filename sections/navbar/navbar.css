@@ -9,14 +9,16 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    transition: all 0.4s;
+    transition: all 0.5s var(--ease-out-expo);
 }
 
 nav.scrolled {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(250, 250, 250, 0.88);
     backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     padding: 1rem 4rem;
     border-bottom: 1px solid var(--border);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.04);
 }
 
 .logo {
@@ -27,6 +29,11 @@ nav.scrolled {
     font-weight: 500;
     position: relative;
     z-index: 101;
+    transition: opacity 0.3s;
+}
+
+.logo:hover {
+    opacity: 0.7;
 }
 
 .logo span {
@@ -57,7 +64,7 @@ nav.scrolled {
     width: 0;
     height: 1px;
     background: var(--dark);
-    transition: width 0.3s;
+    transition: width 0.4s var(--ease-out-expo);
 }
 
 .nav-links a:hover {
@@ -73,17 +80,18 @@ nav.scrolled {
     border: none;
     color: var(--text-white);
     padding: 0.5rem 1.25rem;
-    border-radius: 6px;
+    border-radius: 8px;
     font-family: var(--font-code);
     font-size: 0.8rem;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.4s var(--ease-out-expo);
     text-decoration: none;
 }
 
 .nav-cta:hover {
     background: var(--accent-hover);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-1px);
 }
 
 .hamburger {
@@ -99,7 +107,7 @@ nav.scrolled {
     width: 25px;
     height: 2px;
     background-color: var(--dark);
-    transition: all 0.3s ease;
+    transition: all 0.4s var(--ease-out-expo);
 }
 
 /* Hamburger active animation */

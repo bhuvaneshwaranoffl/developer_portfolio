@@ -15,7 +15,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0.03;
+    opacity: 0.025;
     font-family: var(--font-display);
     font-size: 20vw;
     font-weight: 900;
@@ -34,11 +34,12 @@
     position: relative;
     z-index: 1;
     color: var(--dark);
+    letter-spacing: -0.02em;
 }
 
 .quote-text em {
     font-style: normal;
-    background: linear-gradient(135deg, #000000, #444444);
+    background: linear-gradient(135deg, #1a1a1a, #555555);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -54,7 +55,7 @@
 
 
 /* =========================================
-   CONTACT SECTION — #F2F2F2 bg
+   CONTACT SECTION — #F0F0F0 bg
    ========================================= */
 #contact {
     padding: 8rem 4rem;
@@ -82,30 +83,31 @@
     border-bottom: 1px solid var(--border);
     text-decoration: none;
     color: var(--text-pri);
-    transition: all 0.3s;
+    transition: all 0.4s var(--ease-out-expo);
 }
 
 .contact-info .contact-item:hover {
-    padding-left: 0.5rem;
+    padding-left: 0.75rem;
 }
 
 .contact-info .contact-item:hover .c-icon {
     background: var(--dark);
     color: var(--text-white);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
 }
 
 .c-icon {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     background: var(--surface);
     border: 1px solid var(--border-strong);
-    border-radius: 8px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
-    transition: all 0.3s;
+    transition: all 0.4s var(--ease-out-expo);
     flex-shrink: 0;
 }
 
@@ -130,7 +132,7 @@
     margin-bottom: 2rem;
 }
 
-/* Contact form on F2F2F2 bg */
+/* Contact form on card bg */
 #contact-wrap .form-group input,
 #contact-wrap .form-group textarea {
     background: var(--bg);

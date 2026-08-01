@@ -23,11 +23,12 @@ export function initOrb() {
 
     let orbAngleX = 0, orbAngleY = 0;
     let mouseInfluenceX = 0, mouseInfluenceY = 0;
+    let targetMouseX = 0, targetMouseY = 0;
 
     document.addEventListener('mousemove', (e) => {
         if (!isVisible) return;
-        mouseInfluenceX = (e.clientX / window.innerWidth - 0.5) * 0.3;
-        mouseInfluenceY = (e.clientY / window.innerHeight - 0.5) * 0.3;
+        targetMouseX = (e.clientX / window.innerWidth - 0.5) * 0.25;
+        targetMouseY = (e.clientY / window.innerHeight - 0.5) * 0.25;
     }, { passive: true });
 
     function project3D(x, y, z, cx, cy, fov) {
@@ -60,13 +61,17 @@ export function initOrb() {
         const fov = 500;
         const rings = 14, segments = 14;
 
-        orbAngleY += 0.005 + mouseInfluenceX * 0.02;
-        orbAngleX += mouseInfluenceY * 0.01;
+        // Smooth mouse influence with lerp
+        mouseInfluenceX += (targetMouseX - mouseInfluenceX) * 0.05;
+        mouseInfluenceY += (targetMouseY - mouseInfluenceY) * 0.05;
 
-        // Subtle shadow glow (no color)
+        orbAngleY += 0.004 + mouseInfluenceX * 0.015;
+        orbAngleX += mouseInfluenceY * 0.008;
+
+        // Subtle shadow glow
         const grd = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.1);
-        grd.addColorStop(0, 'rgba(0, 0, 0, 0.06)');
-        grd.addColorStop(0.5, 'rgba(0, 0, 0, 0.02)');
+        grd.addColorStop(0, 'rgba(0, 0, 0, 0.05)');
+        grd.addColorStop(0.5, 'rgba(0, 0, 0, 0.015)');
         grd.addColorStop(1, 'rgba(0, 0, 0, 0)');
         ctx.fillStyle = grd;
         ctx.fillRect(cx - R * 1.2, cy - R * 1.2, R * 2.4, R * 2.4);
@@ -90,9 +95,9 @@ export function initOrb() {
             for (let si = 0; si < segments; si++) {
                 const a = pts[si], b = pts[si + 1];
                 const depth = (a.z + b.z) / (2 * R);
-                const alpha = Math.max(0.03, Math.min(0.25, (depth + 1) / 2));
+                const alpha = Math.max(0.03, Math.min(0.22, (depth + 1) / 2));
                 ctx.strokeStyle = `rgba(0, 0, 0, ${alpha})`;
-                ctx.lineWidth = depth > 0 ? 0.8 : 0.3;
+                ctx.lineWidth = depth > 0 ? 0.7 : 0.25;
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
                 ctx.lineTo(b.x, b.y);
@@ -119,9 +124,9 @@ export function initOrb() {
             for (let ri = 0; ri < rings; ri++) {
                 const a = pts[ri], b = pts[ri + 1];
                 const depth = (a.z + b.z) / (2 * R);
-                const alpha = Math.max(0.03, Math.min(0.2, (depth + 1) / 2));
+                const alpha = Math.max(0.03, Math.min(0.18, (depth + 1) / 2));
                 ctx.strokeStyle = `rgba(0, 0, 0, ${alpha * 0.7})`;
-                ctx.lineWidth = 0.4;
+                ctx.lineWidth = 0.35;
                 ctx.beginPath();
                 ctx.moveTo(a.x, a.y);
                 ctx.lineTo(b.x, b.y);
@@ -152,11 +157,11 @@ export function initOrb() {
                 const alpha = Math.max(0.15, (p.z + R) / (2 * R));
 
                 ctx.beginPath();
-                ctx.arc(proj.x, proj.y, 3.5, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.6})`;
+                ctx.arc(proj.x, proj.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.5})`;
                 ctx.fill();
 
-                ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.5})`;
+                ctx.fillStyle = `rgba(0, 0, 0, ${alpha * 0.45})`;
                 ctx.font = `500 ${Math.floor(10 * proj.scale)}px 'JetBrains Mono', monospace`;
                 ctx.fillText(dp.label, proj.x + 8, proj.y + 4);
             }

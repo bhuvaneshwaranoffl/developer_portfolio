@@ -2,6 +2,7 @@
  * cursor.js
  * Adaptive cursor — black on white sections, white on dark sections.
  * Detects which section the cursor is over and flips color.
+ * Smoother lerp for trailing ring.
  */
 export function initCursor() {
     const cursorDot = document.querySelector('.cursor-dot');
@@ -35,22 +36,35 @@ export function initCursor() {
         }
     });
 
-    // Lerp ring for smooth trailing
+    // Smoother lerp ring — lower value = smoother trailing
     function lerpRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
+        rx += (mx - rx) * 0.1;
+        ry += (my - ry) * 0.1;
         cursorRing.style.left = rx + 'px';
         cursorRing.style.top = ry + 'px';
         requestAnimationFrame(lerpRing);
     }
     lerpRing();
 
-    // Add hover effects for interactive elements
-    const interactables = document.querySelectorAll(
-        'a, button, .proj-card, .stat-card, .skill-pill, .contact-item, input, textarea'
-    );
-    interactables.forEach(el => {
-        el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-        el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    // Use MutationObserver to handle dynamically loaded content
+    function attachHoverListeners() {
+        const interactables = document.querySelectorAll(
+            'a, button, .proj-card, .stat-card, .skill-pill, .skill-category, .contact-item, input, textarea'
+        );
+        interactables.forEach(el => {
+            if (el.dataset.cursorAttached) return;
+            el.dataset.cursorAttached = 'true';
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+    }
+
+    // Initial attachment
+    attachHoverListeners();
+
+    // Re-attach after sections load (since they're dynamically injected)
+    const observer = new MutationObserver(() => {
+        attachHoverListeners();
     });
+    observer.observe(document.body, { childList: true, subtree: true });
 }

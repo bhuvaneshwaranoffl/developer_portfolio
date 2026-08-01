@@ -40,8 +40,8 @@
 }
 
 .fill-word {
-    transition: opacity 0.2s ease-out;
-    opacity: 0.15;
+    transition: opacity 0.3s ease-out;
+    opacity: 0.12;
 }
 
 .stats-grid {
@@ -52,11 +52,11 @@
 }
 
 .stat-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
     padding: 1.5rem;
-    transition: background 0.4s, box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s;
+    transition: background 0.4s, box-shadow 0.6s var(--ease-out-expo), border-color 0.4s, transform 0.5s var(--ease-out-expo);
     position: relative;
     overflow: hidden;
     transform-style: preserve-3d;
@@ -69,7 +69,7 @@
     inset: 0;
     background: radial-gradient(
         circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
-        rgba(255, 255, 255, 0.12),
+        rgba(255, 255, 255, 0.1),
         transparent 50%
     );
     opacity: 0;
@@ -82,8 +82,9 @@
 }
 
 .stat-card:hover {
-    background: rgba(255, 255, 255, 0.08);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 }
 
 .stat-num {
@@ -94,11 +95,12 @@
     display: block;
     position: relative;
     z-index: 1;
+    letter-spacing: -0.02em;
 }
 
 .stat-label {
-    font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.45);
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
     font-family: var(--font-code);
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -108,12 +110,17 @@
 }
 
 .about-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
     padding: 2rem;
     position: sticky;
     top: 8rem;
+    transition: border-color 0.4s;
+}
+
+.about-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 .avatar {
@@ -129,7 +136,12 @@
     font-weight: 800;
     color: var(--dark);
     margin-bottom: 1.5rem;
-    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.08), 0 0 40px rgba(255, 255, 255, 0.08);
+    transition: box-shadow 0.5s var(--ease-out-expo);
+}
+
+.about-card:hover .avatar {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.12), 0 0 60px rgba(255, 255, 255, 0.1);
 }
 
 .about-name {
@@ -143,7 +155,7 @@
 .about-role {
     font-family: var(--font-code);
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.45);
     margin-bottom: 1.5rem;
 }
 
@@ -177,10 +189,10 @@
     box-shadow: 0 0 8px #22c55e;
     display: inline-block;
     margin-right: 4px;
-    animation: pulse 2s infinite;
+    animation: pulse 2.5s infinite;
 }
 
 @keyframes pulse {
     0%, 100% { box-shadow: 0 0 8px #22c55e; }
-    50% { box-shadow: 0 0 18px #22c55e; }
+    50% { box-shadow: 0 0 20px #22c55e; }
 }

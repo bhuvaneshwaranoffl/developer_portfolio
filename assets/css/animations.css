@@ -11,28 +11,22 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Skill pills scatter */
-@keyframes scatterIn {
-    0% { opacity: 0; transform: scale(0.8) translate(var(--rx), var(--ry)); }
-    100% { opacity: 1; transform: scale(1) translate(0, 0); }
-}
-
-/* Floating object drifts */
+/* Floating object drifts — slower, more subtle */
 @keyframes float1 {
     0%, 100% { transform: translateY(0) rotateZ(0deg); }
-    33% { transform: translateY(-20px) rotateZ(5deg); }
-    66% { transform: translateY(10px) rotateZ(-3deg); }
+    33% { transform: translateY(-18px) rotateZ(3deg); }
+    66% { transform: translateY(8px) rotateZ(-2deg); }
 }
 
 @keyframes float2 {
     0%, 100% { transform: translateY(0) rotateZ(0deg); }
-    50% { transform: translateY(-30px) rotateZ(-8deg); }
+    50% { transform: translateY(-22px) rotateZ(-5deg); }
 }
 
 @keyframes float3 {
     0%, 100% { transform: translateY(0) rotate(45deg); }
-    25% { transform: translateY(-15px) rotate(50deg); }
-    75% { transform: translateY(15px) rotate(40deg); }
+    25% { transform: translateY(-12px) rotate(48deg); }
+    75% { transform: translateY(12px) rotate(42deg); }
 }
 
 @keyframes spinSlow {

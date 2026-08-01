@@ -25,13 +25,13 @@ async function loadSection(id, path) {
 
 async function loadAllSections() {
     await Promise.all([
-        loadSection('navbar-container', 'sections/navbar/navbar.html'),
-        loadSection('hero-container', 'sections/hero/hero.html'),
-        loadSection('about-container', 'sections/about/about.html'),
-        loadSection('skills-container', 'sections/skills/skills.html'),
-        loadSection('experience-container', 'sections/experience/experience.html'),
-        loadSection('projects-container', 'sections/projects/projects.html'),
-        loadSection('contact-container', 'sections/contact/contact.html'),
+        loadSection('navbar-container', './sections/navbar/navbar.html'),
+        loadSection('hero-container', './sections/hero/hero.html'),
+        loadSection('about-container', './sections/about/about.html'),
+        loadSection('skills-container', './sections/skills/skills.html'),
+        loadSection('experience-container', './sections/experience/experience.html'),
+        loadSection('projects-container', './sections/projects/projects.html'),
+        loadSection('contact-container', './sections/contact/contact.html'),
     ]);
 }
 

@@ -24,11 +24,48 @@ export function initOrb() {
     let orbAngleX = 0, orbAngleY = 0;
     let mouseInfluenceX = 0, mouseInfluenceY = 0;
     let targetMouseX = 0, targetMouseY = 0;
+    let isDragging = false;
+    let previousMousePosition = { x: 0, y: 0 };
+    let velocity = { x: 0, y: 0 };
 
-    document.addEventListener('mousemove', (e) => {
+    orbCanvas.style.cursor = 'grab';
+    
+    // Allow pointer events on the canvas
+    orbCanvas.style.pointerEvents = 'auto';
+
+    orbCanvas.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        orbCanvas.style.cursor = 'grabbing';
+        previousMousePosition = { x: e.clientX, y: e.clientY };
+        velocity = { x: 0, y: 0 };
+    });
+
+    window.addEventListener('pointerup', () => {
+        isDragging = false;
+        orbCanvas.style.cursor = 'grab';
+    });
+
+    window.addEventListener('pointermove', (e) => {
         if (!isVisible) return;
-        targetMouseX = (e.clientX / window.innerWidth - 0.5) * 0.25;
-        targetMouseY = (e.clientY / window.innerHeight - 0.5) * 0.25;
+        
+        if (!isDragging) {
+            // Subtle tilt tracking based on screen center
+            targetMouseX = (e.clientX / window.innerWidth - 0.5) * 0.8;
+            targetMouseY = (e.clientY / window.innerHeight - 0.5) * 0.8;
+        } else {
+            // Drag logic
+            const deltaMove = {
+                x: e.clientX - previousMousePosition.x,
+                y: e.clientY - previousMousePosition.y
+            };
+            
+            orbAngleY += deltaMove.x * 0.008;
+            orbAngleX += deltaMove.y * 0.008;
+            
+            // Store velocity for inertia
+            velocity = { x: deltaMove.x * 0.008, y: deltaMove.y * 0.008 };
+            previousMousePosition = { x: e.clientX, y: e.clientY };
+        }
     }, { passive: true });
 
     function project3D(x, y, z, cx, cy, fov) {
@@ -61,12 +98,19 @@ export function initOrb() {
         const fov = 500;
         const rings = 14, segments = 14;
 
-        // Smooth mouse influence with lerp
-        mouseInfluenceX += (targetMouseX - mouseInfluenceX) * 0.05;
-        mouseInfluenceY += (targetMouseY - mouseInfluenceY) * 0.05;
+        if (!isDragging) {
+            // Smooth mouse influence with lerp
+            mouseInfluenceX += (targetMouseX - mouseInfluenceX) * 0.05;
+            mouseInfluenceY += (targetMouseY - mouseInfluenceY) * 0.05;
 
-        orbAngleY += 0.004 + mouseInfluenceX * 0.015;
-        orbAngleX += mouseInfluenceY * 0.008;
+            // Auto rotation + hover tilt + inertia
+            orbAngleY += 0.004 + mouseInfluenceX * 0.02 + velocity.x;
+            orbAngleX += mouseInfluenceY * 0.02 + velocity.y;
+            
+            // Friction / decay on inertia
+            velocity.x *= 0.95;
+            velocity.y *= 0.95;
+        }
 
         // Subtle shadow glow
         const grd = ctx.createRadialGradient(cx, cy, R * 0.1, cx, cy, R * 1.1);

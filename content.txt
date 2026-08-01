@@ -8,7 +8,7 @@ Projects
 Contact
 
 I build Flutter apps that feel like magic.
-2.7 years shipping production family data organizer apps — from Smallcase MF SDK to offline-first architecture. Clean code. Real impact.
+2.9 years shipping production family data organizer apps — from Smallcase MF SDK to offline-first architecture. Clean code. Real impact.
 
 View My Work
 Download Resume
@@ -19,7 +19,7 @@ Today I build family data organizer products at Beyondco Technologies, integrati
 I don't just write code. I own features — from requirement to deployment.
 
 
-2.7 Years Experience
+2.9 Years Experience
 10+ Features Shipped
 3 SDKs Integrated
 8.19 CGPA
@@ -44,7 +44,7 @@ Where I've shipped
 CURRENT
 Flutter Developer
 Beyondco Technologies (SafeBox)
-Mar 2024 – Present
+Mar 2025 – Present
 Family Data Organizer · Product-Based · Coimbatore
 
 Integrated Smallcase MF SDK, Finvu Account Aggregator SDK, and Loan Fetch flows — real-money features used by real users
@@ -55,7 +55,7 @@ Leveraged Cursor AI for 10x development speed without sacrificing quality
 
 Flutter Developer
 T-NXT India Pvt. Ltd.
-Dec 2023 – Feb 2024
+Dec 2022 – Feb 2024
 Service-Based · Coimbatore
 
 Sole Flutter developer — owned the entire product lifecycle solo

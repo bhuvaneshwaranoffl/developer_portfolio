@@ -7,6 +7,23 @@ const BackgroundStars = ({ count: propCount }) => {
   const count = propCount || (isMobile ? 1500 : 5000);
   const pointsRef = useRef();
 
+  const circleTexture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 64;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    
+    // Create radial gradient for a soft glow effect
+    const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gradient.addColorStop(0, 'rgba(255,255,255,1)');
+    gradient.addColorStop(1, 'rgba(255,255,255,0)');
+    
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, 64, 64);
+    
+    return new THREE.CanvasTexture(canvas);
+  }, []);
+
   // Generate random positions and colors for the stars
   const { positions, colors } = useMemo(() => {
     const positions = new Float32Array(count * 3);
@@ -74,13 +91,14 @@ const BackgroundStars = ({ count: propCount }) => {
         />
       </bufferGeometry>
       <pointsMaterial
-        size={0.15}
+        size={isMobile ? 0.2 : 0.15}
         vertexColors
         transparent
         opacity={0.8}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
+        map={circleTexture}
       />
     </points>
   );

@@ -19,13 +19,11 @@ function App() {
     const lenis = new Lenis({
       duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      syncTouch: true, // Enables smooth scroll on mobile and fixes stuck scrolling
       touchMultiplier: 2,
-      infinite: false,
     });
     lenisRef.current = lenis;
     window.lenis = lenis;

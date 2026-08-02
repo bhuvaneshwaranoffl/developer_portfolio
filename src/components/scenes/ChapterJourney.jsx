@@ -86,10 +86,10 @@ const ChapterJourney = () => {
       {milestones.map((m, i) => (
         <group key={m.id} position={m.pos}>
           {/* The glowing star */}
-          <Sphere args={[0.2, 16, 16]}>
+          <Sphere args={[0.2, window.innerWidth <= 768 ? 8 : 16, window.innerWidth <= 768 ? 8 : 16]}>
             <meshBasicMaterial color="#FFFFFF" />
           </Sphere>
-          <Sphere args={[0.4, 16, 16]}>
+          <Sphere args={[0.4, window.innerWidth <= 768 ? 8 : 16, window.innerWidth <= 768 ? 8 : 16]}>
             <meshBasicMaterial color="#00F0FF" transparent opacity={0.3} />
           </Sphere>
 

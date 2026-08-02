@@ -12,7 +12,7 @@ const ChapterArrival = () => {
   // Generate a procedural galaxy
   const { positions, colors, randoms } = useMemo(() => {
     const isMobile = window.innerWidth <= 768;
-    const count = isMobile ? 800 : 10000;
+    const count = isMobile ? 300 : 10000;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     const randoms = new Float32Array(count); // Used for animation offsets
@@ -91,12 +91,18 @@ const ChapterArrival = () => {
 
     // Add scroll event listener to affect rotation velocity
     let lastScrollY = window.scrollY;
+    let ticking = false;
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const delta = scrollY - lastScrollY;
-      // Add rotation based on scroll distance (creates a spin-up effect)
-      targetRotation.current += delta * 0.002;
-      lastScrollY = scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          const delta = scrollY - lastScrollY;
+          targetRotation.current += delta * 0.002;
+          lastScrollY = scrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     
     window.addEventListener('scroll', handleScroll, { passive: true });

@@ -42,6 +42,9 @@ const CustomCursor = () => {
   const followerRef = useRef(null);
 
   useEffect(() => {
+    // If it's a touch device, do not run the cursor logic.
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
+
     const onMouseMove = (e) => {
       gsap.to(cursorRef.current, { x: e.clientX, y: e.clientY, duration: 0 });
       gsap.to(followerRef.current, { x: e.clientX, y: e.clientY, duration: 0.5, ease: "power3.out" });

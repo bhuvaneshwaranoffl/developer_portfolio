@@ -11,7 +11,8 @@ const ChapterArrival = () => {
 
   // Generate a procedural galaxy
   const { positions, colors, randoms } = useMemo(() => {
-    const count = 10000;
+    const isMobile = window.innerWidth <= 768;
+    const count = isMobile ? 3000 : 10000;
     const positions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
     const randoms = new Float32Array(count); // Used for animation offsets

@@ -14,7 +14,8 @@ const ChapterContact = () => {
 
   // Create particles for the accretion disk debris
   const { positions, randoms } = useMemo(() => {
-    const count = 5000;
+    const isMobile = window.innerWidth <= 768;
+    const count = isMobile ? 1500 : 5000;
     const positions = new Float32Array(count * 3);
     const randoms = new Float32Array(count);
 
@@ -91,7 +92,7 @@ const ChapterContact = () => {
     <group ref={groupRef}>
       {/* 1. Lensing Halo (The bent light around the top/bottom of the black hole) */}
       <mesh position={[0, 0, -0.2]}>
-        <ringGeometry args={[2.0, 3.5, 64]} />
+        <ringGeometry args={[2.0, 3.5, window.innerWidth <= 768 ? 32 : 64]} />
         <meshBasicMaterial 
           color="#ff7722" 
           transparent 
@@ -102,7 +103,7 @@ const ChapterContact = () => {
       </mesh>
       
       <mesh position={[0, 0, -0.1]}>
-        <ringGeometry args={[2.0, 2.5, 64]} />
+        <ringGeometry args={[2.0, 2.5, window.innerWidth <= 768 ? 32 : 64]} />
         <meshBasicMaterial 
           color="#ffffff" 
           transparent 
@@ -114,7 +115,7 @@ const ChapterContact = () => {
 
       {/* 2. The Black Hole (Event Horizon) */}
       <mesh position={[0, 0, 0]}>
-        <sphereGeometry args={[2, 64, 64]} />
+        <sphereGeometry args={[2, window.innerWidth <= 768 ? 32 : 64, window.innerWidth <= 768 ? 32 : 64]} />
         <meshBasicMaterial color="#000000" />
       </mesh>
 
@@ -122,7 +123,7 @@ const ChapterContact = () => {
       <group rotation={[Math.PI / 2.2, Math.PI / 10, -Math.PI / 6]}>
         {/* Main outer disk (orange/dusty) */}
         <mesh ref={diskRef}>
-          <ringGeometry args={[2.2, 8, 128]} />
+          <ringGeometry args={[2.2, 8, window.innerWidth <= 768 ? 64 : 128]} />
           <meshBasicMaterial 
             color="#ff8833" 
             transparent 
@@ -134,7 +135,7 @@ const ChapterContact = () => {
         
         {/* Inner bright hot disk (white/blueish) */}
         <mesh ref={innerDiskRef} position={[0, 0, 0.01]}>
-          <ringGeometry args={[2.05, 3.5, 128]} />
+          <ringGeometry args={[2.05, 3.5, window.innerWidth <= 768 ? 64 : 128]} />
           <meshBasicMaterial 
             color="#ffffff" 
             transparent 
@@ -146,7 +147,7 @@ const ChapterContact = () => {
         
         {/* Mid intense orange glow */}
         <mesh position={[0, 0, 0.02]}>
-          <ringGeometry args={[2.1, 4.5, 128]} />
+          <ringGeometry args={[2.1, 4.5, window.innerWidth <= 768 ? 64 : 128]} />
           <meshBasicMaterial 
             color="#ffcc88" 
             transparent 

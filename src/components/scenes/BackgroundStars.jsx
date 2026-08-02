@@ -2,7 +2,9 @@ import React, { useRef, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const BackgroundStars = ({ count = 5000 }) => {
+const BackgroundStars = ({ count: propCount }) => {
+  const isMobile = window.innerWidth <= 768;
+  const count = propCount || (isMobile ? 1500 : 5000);
   const pointsRef = useRef();
 
   // Generate random positions and colors for the stars

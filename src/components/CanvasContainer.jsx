@@ -9,11 +9,19 @@ import ChapterJourney from './scenes/ChapterJourney';
 import ChapterContact from './scenes/ChapterContact';
 
 const CanvasContainer = () => {
+  const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 75 }}
-      dpr={[1, 2]}
-      gl={{ antialias: false, alpha: false }}
+      dpr={isMobile ? [1, 1] : [1, 2]}
+      gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }}
       style={{
         position: 'fixed',
         top: 0,
@@ -35,15 +43,17 @@ const CanvasContainer = () => {
         <ChapterJourney />
         <ChapterContact />
         
-        <EffectComposer disableNormalPass>
-          <Bloom 
-            luminanceThreshold={0.2}
-            luminanceSmoothing={0.9} 
-            intensity={1.5} 
-            mipmapBlur
-          />
-          <Noise opacity={0.035} />
-        </EffectComposer>
+        {!isMobile && (
+          <EffectComposer disableNormalPass>
+            <Bloom 
+              luminanceThreshold={0.2}
+              luminanceSmoothing={0.9} 
+              intensity={1.5} 
+              mipmapBlur
+            />
+            <Noise opacity={0.035} />
+          </EffectComposer>
+        )}
 
         <Preload all />
       </Suspense>

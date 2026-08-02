@@ -27,7 +27,6 @@ const CanvasContainer = () => {
         <BackgroundStars />
         <ChapterArrival />
         <ChapterJourney />
-        <ChapterSkills />
         <ChapterContact />
         
         {/* Post Processing for Cinematic Look */}

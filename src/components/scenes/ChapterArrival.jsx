@@ -101,7 +101,7 @@ const ChapterArrival = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      if (tl) tl.kill();
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);

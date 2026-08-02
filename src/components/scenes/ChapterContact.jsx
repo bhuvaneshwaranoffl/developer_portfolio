@@ -73,7 +73,7 @@ const ChapterContact = () => {
     }, 0);
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      if (tl) tl.kill();
     };
   }, []);
 

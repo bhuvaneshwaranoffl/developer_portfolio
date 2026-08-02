@@ -294,68 +294,79 @@ const Overlay = ({ splashFinished }) => {
   const [selectedSkill, setSelectedSkill] = React.useState(null);
 
   useLayoutEffect(() => {
-    // 1. Hero Entrance Animation
-    if (splashFinished && heroRef.current) {
-      gsap.fromTo(heroRef.current.children, 
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.5 }
-      );
-    }
+    let ctx = gsap.context(() => {
+      // 1. Hero Entrance Animation
+      if (splashFinished && heroRef.current) {
+        gsap.fromTo(heroRef.current.children, 
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.5 }
+        );
+      }
 
-    // 2. Cinematic reveal for Process steps (with back ease)
-    const processSteps = gsap.utils.toArray('.process-step');
-    processSteps.forEach((step) => {
-      gsap.fromTo(step,
-        { opacity: 0, scale: 0.5, y: 50, filter: 'blur(10px)' },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          filter: 'blur(0px)',
-          duration: 1,
-          ease: "back.out(1.7)",
-          scrollTrigger: {
-            trigger: step,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
+      // 2. Cinematic reveal for Process steps (with back ease)
+      const processSteps = gsap.utils.toArray('.process-step');
+      processSteps.forEach((step) => {
+        gsap.fromTo(step,
+          { opacity: 0, scale: 0.5, y: 50, filter: 'blur(10px)' },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 1,
+            ease: "back.out(1.7)",
+            scrollTrigger: {
+              trigger: step,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
           }
-        }
-      );
+        );
+      });
     });
 
     // 4. 3D Magnetic Tilt Effect for interactive cards
     const cards = gsap.utils.toArray('.interactive-card');
-    cards.forEach(card => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
-        
-        gsap.to(card, {
-          rotateX,
-          rotateY,
-          transformPerspective: 1000,
-          ease: "power2.out",
-          duration: 0.5
-        });
-      });
+    const handleMouseMove = (e) => {
+      const card = e.currentTarget;
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const rotateX = ((y - centerY) / centerY) * -5;
+      const rotateY = ((x - centerX) / centerX) * 5;
       
-      card.addEventListener('mouseleave', () => {
-        gsap.to(card, {
-          rotateX: 0,
-          rotateY: 0,
-          ease: "power3.out",
-          duration: 1
-        });
+      gsap.to(card, {
+        rotateX,
+        rotateY,
+        transformPerspective: 1000,
+        ease: "power2.out",
+        duration: 0.5
       });
+    };
+    
+    const handleMouseLeave = (e) => {
+      const card = e.currentTarget;
+      gsap.to(card, {
+        rotateX: 0,
+        rotateY: 0,
+        ease: "power3.out",
+        duration: 1
+      });
+    };
+
+    cards.forEach(card => {
+      card.addEventListener('mousemove', handleMouseMove);
+      card.addEventListener('mouseleave', handleMouseLeave);
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      ctx.revert();
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', handleMouseMove);
+        card.removeEventListener('mouseleave', handleMouseLeave);
+      });
     };
   }, [splashFinished]);
 

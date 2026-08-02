@@ -5,8 +5,8 @@ import { EffectComposer, Bloom, Noise } from '@react-three/postprocessing';
 import BackgroundStars from './scenes/BackgroundStars';
 import ChapterArrival from './scenes/ChapterArrival';
 import ChapterJourney from './scenes/ChapterJourney';
-import ChapterSkills from './scenes/ChapterSkills';
 import ChapterContact from './scenes/ChapterContact';
+import Spaceship from './scenes/Spaceship';
 
 const CanvasContainer = () => {
   return (
@@ -25,6 +25,7 @@ const CanvasContainer = () => {
 
         {/* Cinematic Universe Elements */}
         <BackgroundStars />
+        <Spaceship />
         <ChapterArrival />
         <ChapterJourney />
         <ChapterContact />

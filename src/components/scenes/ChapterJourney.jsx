@@ -62,7 +62,7 @@ const ChapterJourney = () => {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach(t => t.kill());
+      if (tl) tl.kill();
     };
   }, []);
 

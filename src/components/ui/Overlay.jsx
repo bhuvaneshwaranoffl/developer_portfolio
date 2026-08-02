@@ -578,7 +578,7 @@ const Overlay = ({ splashFinished }) => {
           <p style={{ color: 'var(--text-secondary)', fontSize: '1.25rem', marginTop: '1rem' }}>Let's talk about your next product.</p>
 
           <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', marginTop: '3rem', flexWrap: 'wrap' }}>
-            <a href="mailto:bhuvaneshwaranoffl@gmail.com" style={{
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=bhuvaneshwaranoffl@gmail.com" target="_blank" rel="noopener noreferrer" style={{
               padding: '1rem 3rem',
               background: 'var(--accent-primary)',
               color: '#000',
@@ -587,6 +587,9 @@ const Overlay = ({ splashFinished }) => {
               fontWeight: '600',
               fontSize: '1.25rem',
               transition: 'transform 0.2s',
+              cursor: 'pointer',
+              position: 'relative',
+              zIndex: 10
             }} onMouseOver={e => e.target.style.transform = 'scale(1.05)'} onMouseOut={e => e.target.style.transform = 'scale(1)'}>
               Email Me
             </a>

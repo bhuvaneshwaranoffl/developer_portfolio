@@ -23,7 +23,7 @@ const ChapterArrival = () => {
     const randomnessPower = 3;
 
     const colorInside = new THREE.Color('#D946EF'); // Magenta center
-    const colorOutside = new THREE.Color('#00F0FF'); // Cyan edges
+    const colorOutside = new THREE.Color('#b026ff'); // Neon Purple edges
 
     for (let i = 0; i < count; i++) {
       const i3 = i * 3;
@@ -55,12 +55,15 @@ const ChapterArrival = () => {
     return { positions, colors, randoms };
   }, []);
 
+  const targetRotation = useRef(0);
+  const currentRotation = useRef(0);
+
   useLayoutEffect(() => {
     if (!galaxyRef.current) return;
 
-    // Start with galaxy scaled down and invisible
-    gsap.set(galaxyRef.current.scale, { x: 0.1, y: 0.1, z: 0.1 });
-    gsap.set(galaxyRef.current.material, { opacity: 0 });
+    // Start with galaxy visible
+    gsap.set(galaxyRef.current.scale, { x: 1, y: 1, z: 1 });
+    gsap.set(galaxyRef.current.material, { opacity: 1 });
 
     // GSAP Animation tied to scroll
     const tl = gsap.timeline({
@@ -72,33 +75,47 @@ const ChapterArrival = () => {
       }
     });
 
-    // As user scrolls through the arrival chapter, the galaxy forms and grows
+    // As user scrolls down, fly INTO the galaxy and fade it out
     tl.to(galaxyRef.current.scale, {
-      x: 1.5,
-      y: 1.5,
-      z: 1.5,
-      ease: "power2.out"
+      x: 4,
+      y: 4,
+      z: 4,
+      ease: "power2.in"
     }, 0);
 
     tl.to(galaxyRef.current.material, {
-      opacity: 1,
-      ease: "power2.out"
+      opacity: 0,
+      ease: "power2.in"
     }, 0);
+
+    // Add scroll event listener to affect rotation velocity
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const delta = scrollY - lastScrollY;
+      // Add rotation based on scroll distance (creates a spin-up effect)
+      targetRotation.current += delta * 0.002;
+      lastScrollY = scrollY;
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill());
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     if (galaxyRef.current) {
-      // Slow rotation of the entire galaxy
-      galaxyRef.current.rotation.y = state.clock.elapsedTime * 0.05;
+      // 1. Endless slow rotation
+      targetRotation.current += delta * 0.05;
       
-      // Update individual stars slightly (custom shader could be better here, but this works for now)
-      const positionsAttribute = galaxyRef.current.geometry.attributes.position;
-      // We avoid updating 10,000 points on CPU every frame for performance, 
-      // instead we rely on the group rotation above.
+      // 2. Smoothly interpolate current rotation to target
+      currentRotation.current += (targetRotation.current - currentRotation.current) * 0.05;
+      
+      // Apply the rotation
+      galaxyRef.current.rotation.y = currentRotation.current;
     }
   });
 

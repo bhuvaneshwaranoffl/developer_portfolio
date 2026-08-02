@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import CanvasContainer from './components/CanvasContainer';
 import Overlay from './components/ui/Overlay';
 import SplashScreen from './components/ui/SplashScreen';
+import CustomCursor from './components/ui/CustomCursor';
+import NavBar from './components/ui/NavBar';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +28,7 @@ function App() {
       infinite: false,
     });
     lenisRef.current = lenis;
+    window.lenis = lenis;
 
     // Stop scrolling initially until splash finishes
     if (!splashFinished) {
@@ -51,7 +54,9 @@ function App() {
 
   return (
     <>
+      <CustomCursor />
       {!splashFinished && <SplashScreen onComplete={() => setSplashFinished(true)} />}
+      {splashFinished && <NavBar />}
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: 0 }}>
         <CanvasContainer />
       </div>

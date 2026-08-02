@@ -20,7 +20,7 @@ const CanvasContainer = () => {
   return (
     <Canvas
       camera={{ position: [0, 0, 5], fov: 75 }}
-      dpr={isMobile ? [1, 1] : [1, 2]}
+      dpr={isMobile ? [1, 1.5] : [1, 2]}
       gl={{ antialias: false, alpha: false, powerPreference: "high-performance" }}
       style={{
         position: 'fixed',
@@ -51,7 +51,6 @@ const CanvasContainer = () => {
               intensity={1.5} 
               mipmapBlur
             />
-            <Noise opacity={0.035} />
           </EffectComposer>
         )}
 

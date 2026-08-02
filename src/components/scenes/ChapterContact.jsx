@@ -15,7 +15,7 @@ const ChapterContact = () => {
   // Create particles for the accretion disk debris
   const { positions, randoms } = useMemo(() => {
     const isMobile = window.innerWidth <= 768;
-    const count = isMobile ? 1500 : 5000;
+    const count = isMobile ? 400 : 5000;
     const positions = new Float32Array(count * 3);
     const randoms = new Float32Array(count);
 

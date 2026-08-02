@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 const BackgroundStars = ({ count: propCount }) => {
   const isMobile = window.innerWidth <= 768;
-  const count = propCount || (isMobile ? 1500 : 5000);
+  const count = propCount || (isMobile ? 500 : 5000);
   const pointsRef = useRef();
 
   const circleTexture = useMemo(() => {

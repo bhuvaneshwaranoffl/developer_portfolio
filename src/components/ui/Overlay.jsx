@@ -56,14 +56,18 @@ const GlassCard = styled.div`
     box-shadow: 
       inset 0 0 20px rgba(255, 255, 255, 0.05), 
       0 12px 40px 0 rgba(0, 0, 0, 0.5),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  @media (max-width: 768px) {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: rgba(17, 24, 39, 0.85); /* Opaque fallback for mobile performance */
   }
 `;
 
 const ArsenalCard = styled(GlassCard)`
   background: 
-    linear-gradient(135deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 15, 0.8) 100%),
-    url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.04"/></svg>');
+    linear-gradient(135deg, rgba(20, 20, 25, 0.6) 0%, rgba(10, 10, 15, 0.8) 100%);
   position: relative;
   overflow: hidden;
   
@@ -137,6 +141,12 @@ const SkillChips = styled.div`
       &::after {
         left: 200%;
       }
+    }
+    
+    @media (max-width: 768px) {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(17, 24, 39, 0.9);
     }
   }
 `;
@@ -307,12 +317,11 @@ const Overlay = ({ splashFinished }) => {
       const processSteps = gsap.utils.toArray('.process-step');
       processSteps.forEach((step) => {
         gsap.fromTo(step,
-          { opacity: 0, scale: 0.5, y: 50, filter: 'blur(10px)' },
+          { opacity: 0, scale: 0.5, y: 50 },
           {
             opacity: 1,
             scale: 1,
             y: 0,
-            filter: 'blur(0px)',
             duration: 1,
             ease: "back.out(1.7)",
             scrollTrigger: {
